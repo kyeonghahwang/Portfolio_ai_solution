@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetinaFace Optimization | 상세 프로젝트 - 황경하</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { navy: '#003774' } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-navy dark:text-blue-400 font-bold">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Home
+            </a>
+            <button onclick="toggleDarkMode()"
+                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold mb-6">
+                MODEL OPTIMIZATION / EDGE DEVICE
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-blue-400 mb-8">RetinaFace Optimization</h1>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                경량화 시 발생하는 성능 저하를 최소화하기 위해 아키텍처 구조를 심층 분석하여 문제를 정의하고, 성능 개선을 위해 FPN 재설계, Attention 기법 도입, Channel
+                Shuffle 및
+                Deformable Convolution을 적용하여 최적화를 수행했습니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="py-20 max-w-4xl mx-auto px-6 space-y-24">
+        <!-- Problem -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="alert-circle" class="text-red-500"></i> Problem Definition
+            </h2>
+            <div class="space-y-4 text-slate-700 dark:text-slate-300">
+                <p>RetinaFace는 RetinaNet 기반 구조를 가진 모델임을 파악 후, RetinaNet의 문제점을 분석했습니다. 그 결과, Detection Head 부분에 많은 연산 부담이
+                    이루어지며 경량화 백본(MobileNet v1) 도입시 성능이 13% 급감합니다.</p>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Edge Device에서의 실시간 구동 제약 (낮은 FPS).</li>
+                    <li>작은 객체(Small Face)에 대한 탐지 정확도 유지의 기술적 한계.</li>
+                    <li>모델 경량화 시 발생하는 급격한 성능 저하 문제.</li>
+                </ul>
+                <img src="RetinaFace 프로젝트 이미지/문제 정의 - RetinaNet 메모리, Flops 과중 분석.png"
+                    class="w-full rounded-2xl shadow-lg mt-8 border border-slate-200 dark:border-slate-800"
+                    alt="RetinaFace Arch">
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="cpu" class="text-blue-500"></i> Methodology: Developed Architecture
+            </h2>
+            <div class="space-y-8 text-slate-700 dark:text-slate-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">1. ECA-CBAM
+                        </h3>
+                        <p class="text-sm">중요한 채널/공간 정보를 강조하여 Head 입력을 정제합니다. CBAM의 MLP를 1D Conv(ECA)로 대체해 연산 부담을 줄이면서
+                            표현력을 유지할 수 있도록 합니다.</p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">2. WFPN (Weighted Feature
+                            Pyramid Network)</h3>
+                        <p class="text-sm">FPN의 단순 sum 대신 학습 가능한 가중치 결합을 도입해, 스케일별 중요도를 학습하며 정보 손실을 줄이고 성능을 향상시킵니다.</p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">3. SCM (Shuffle Context Module)
+                        </h3>
+                        <p class="text-sm">채널 수를 줄여 연산을 억제한 뒤, 채널 셔플로 컨텍스트를 섞어 효율적으로 표현력을 강화합니다.</p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">4. Deformable Convolution</h3>
+                        <p class="text-sm">offset 기반 sampling으로 소형/변형 얼굴에서도 안정적으로 특징을 포착해 탐지 성능을 보완합니다.</p>
+                    </div>
+                </div>
+
+                <img src="RetinaFace 프로젝트 이미지/method - 개선 아키텍처.png"
+                    class="w-full rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                    alt="Optimized Architecture Pipeline">
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="check-circle" class="text-green-500"></i> Results & Performance
+            </h2>
+            <div class="space-y-6 text-slate-700 dark:text-slate-300">
+                <p>최적화된 모델은 원본 모델 대비 특히 'Hard Case' (소형 객체, 가려짐 등)에서 더 안정적인 탐지 결과를 보여주었습니다.</p>
+
+                <div class="flex justify-center mt-8">
+                    <img src="RetinaFace 프로젝트 이미지/results - RetinaFace 탐지 시각화.png"
+                        class="rounded-xl shadow-md border border-slate-200 max-w-3xl w-full" alt="Baseline Result">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                    <div class="text-center p-6 bg-navy text-white rounded-2xl shadow-lg">
+                        <div class="text-4xl font-bold mb-2">+2.7%</div>
+                        <div class="text-xs opacity-80 uppercase tracking-widest font-bold">Hard Case mAP Up</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">Implemention</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Pytorch-based</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400 uppercase">1st Place</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Capstone Design
+                            Excellence
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-8">다른 프로젝트 보러가기</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="project-crop-for-trust.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Crop
+                    for Trust</a>
+                <a href="project-hwaseong.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Spatial
+                    Data Study</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS-Vision Leadership | 상세 프로젝트 - 황경하</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { navy: '#003774' } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-navy dark:text-blue-400 font-bold">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Home
+            </a>
+            <button onclick="toggleDarkMode()"
+                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold mb-6">
+                LEADERSHIP / CLUB MANAGEMENT
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-blue-400 mb-8">DS-Vision: Data Science Elite
+                Club Leadership</h1>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                단순한 동아리 활동을 넘어, 입문자부터 심화 전공자까지 함께 성장할 수 있는 학술 커리큘럼을 설계하고 다수의 공모전 입상을 이끌어낸 학습 공동체 리더십의 기록입니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="py-20 max-w-4xl mx-auto px-6 space-y-24">
+        <!-- Vision -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="users" class="text-blue-500"></i> The Absence of Community
+            </h2>
+            <div class="space-y-4 text-slate-700 dark:text-slate-300">
+                <p>데이터과학부 내에서 이론 학습 외에 실질적인 프로젝트 경험을 공유하고 대외 활동을 조직적으로 준비할 수 있는 주도적인 학술 동아리의 부재를 해결하고자 했습니다.</p>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>신입 부원들의 높은 기술적 진입 장벽 해결 필요.</li>
+                    <li>지속 가능한 학습 문화(Peer-review) 정착.</li>
+                    <li>기업 연계 프로젝트 및 해커톤 기획을 통한 실전 역량 강화.</li>
+                </ul>
+                <img src="Leadership 프로젝트 이미지/VLM 스터디 활동 이미지 - 학습 로드맵 이미지.png"
+                    class="w-full rounded-2xl shadow-lg mt-8 border border-slate-200 dark:border-slate-800"
+                    alt="Roadmap">
+            </div>
+        </section>
+
+        <!-- Activities -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="book-open" class="text-blue-500"></i> Key Initiatives
+            </h2>
+            <div class="space-y-8 text-slate-700 dark:text-slate-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">Structured Curriculum</h3>
+                        <p class="text-sm">기초반(SQL, 통계)과 응용반(DL, MLOps)으로 이분화하여 체계적인 학습 로드맵을 제공하고 주간 세미나를 주도했습니다.</p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">Industry Collaboration</h3>
+                        <p class="text-sm">KT 디지털인재 장학생 선발 및 산학 프로젝트 참여를 독려하여 단순 학술을 넘어선 실무 중심의 활동을 지향했습니다.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="Leadership 프로젝트 이미지/VLM 스터디 활동 이미지 - ppt 이미지 2.png" class="rounded-xl shadow-md"
+                        alt="Study 1">
+                    <img src="Leadership 프로젝트 이미지/취업동아리 활동 이미지 - 정기 회의 이미지.png" class="rounded-xl shadow-md"
+                        alt="Meeting">
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="award" class="text-orange-500"></i> Impact & Recognition
+            </h2>
+            <div class="space-y-6 text-slate-700 dark:text-slate-300">
+                <p>20명 이상의 부원을 관리하며, 개별 부원들이 대외 공모전에서 다수 입상할 수 있도록 프로젝트 가이드 및 멘토링을 수행했습니다.</p>
+
+                <img src="Leadership 프로젝트 이미지/소자부식 예측 연구 이미지 - 결과 분석 이미지.png"
+                    class="w-full rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                    alt="Result Analysis">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                    <div class="text-center p-6 bg-navy text-white rounded-2xl shadow-lg">
+                        <div class="text-4xl font-bold mb-2">Grand Prize</div>
+                        <div class="text-xs opacity-80 uppercase tracking-widest font-bold">1st Place Distinction</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">Individual MVP</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Excellence Honor</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">20+ Members</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Active Community</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-8">황경하의 다른 역량도 확인해 보세요.</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="index.html#projects"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Back
+                    to Projects</a>
+                <a href="index.html#awards"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Awards
+                    & Honors</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+
+</html>

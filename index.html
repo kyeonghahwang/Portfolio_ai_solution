@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황경하 | AI Researcher & Engineer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#003774',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-navy: #003774;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .bg-navy {
+            background-color: var(--primary-navy);
+        }
+
+        .text-navy {
+            color: var(--primary-navy);
+        }
+
+        .border-navy {
+            border-color: var(--primary-navy);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .admin-only {
+            display: none;
+        }
+
+        body.is-admin .admin-only {
+            display: block;
+        }
+
+        /* Dark mode transition */
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed">
+
+    <!-- Navigation -->
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="text-xl font-bold text-navy dark:text-blue-400 tracking-tight">KH.HWANG</a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium items-center">
+                <a href="#about" class="hover:text-navy dark:hover:text-blue-400 transition-colors">About</a>
+                <a href="#tech" class="hover:text-navy dark:hover:text-blue-400 transition-colors">Tech Stack</a>
+                <a href="#projects" class="hover:text-navy dark:hover:text-blue-400 transition-colors">Projects</a>
+                <a href="#awards" class="hover:text-navy dark:hover:text-blue-400 transition-colors">Awards</a>
+                <a href="#contact" class="hover:text-navy dark:hover:text-blue-400 transition-colors">Contact</a>
+
+                <!-- Dark Mode Toggle Selection -->
+                <button onclick="toggleDarkMode()"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    id="theme-toggle">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+
+                <button onclick="openAdminModal()" class="text-slate-400 hover:text-navy dark:hover:text-blue-400"><i
+                        data-lucide="lock" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / About Me -->
+    <section id="about" class="py-20 bg-white dark:bg-slate-950">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+            <div class="relative group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-navy to-blue-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200">
+                </div>
+                <img src="증명사진.jpg" alt="황경하"
+                    class="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-white dark:border-slate-800 shadow-xl">
+            </div>
+            <div class="flex-1 text-center md:text-left">
+                <div class="flex flex-col md:flex-row md:items-end gap-4 mb-2">
+                    <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-blue-400">황경하</h1>
+                    <div class="flex gap-4 justify-center md:justify-start mb-2">
+                        <a href="https://github.com/kyeongha-git" target="_blank"
+                            class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-navy hover:text-white dark:hover:bg-blue-600 transition-all font-medium text-sm">
+                            <i data-lucide="github" class="w-4 h-4"></i> Github
+                        </a>
+                        <a href="https://kyeongha-blog.tistory.com/" target="_blank"
+                            class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-navy hover:text-white dark:hover:bg-blue-600 transition-all font-medium text-sm">
+                            <img src="티스토리_아이콘.png" alt="Tistory" class="w-4 h-4 rounded-sm"> Tech blog
+                        </a>
+                    </div>
+                </div>
+                <p class="text-xl text-blue-600 dark:text-blue-300 font-semibold mb-6">AI & ML Engineer</p>
+                <div class="space-y-4 text-slate-600 dark:text-slate-400">
+                    <p class="text-lg leading-relaxed">
+                        <strong>"End-to-End AI Engineer: From Data to Deployment"</strong><br>
+                        데이터 분석과 모델링을 넘어, 안정적인 MLOps 환경 구축까지 아우르며 연구 환경의 모델을 실질적인 가치로 변환하는 엔지니어를 지향합니다.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
+                        <span
+                            class="flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-medium">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 text-navy dark:text-blue-400"></i> 수원대학교
+                            데이터과학부
+                        </span>
+                        <span
+                            class="flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-medium">
+                            <i data-lucide="star" class="w-4 h-4 text-orange-500"></i> GPA 4.45 / 4.5
+                        </span>
+                        <span
+                            class="flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-bold">
+                            <i data-lucide="award" class="w-4 h-4"></i> 성적 우수 장학금 7회 수혜
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12 text-center">Technical Expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Languages -->
+                <div
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    <div
+                        class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="code-2" class="text-navy dark:text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 dark:text-white">Languages</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Python
+                            (Advanced)</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">SQL</span>
+                    </div>
+                </div>
+                <!-- Frameworks -->
+                <div
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    <div
+                        class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="layers" class="text-navy dark:text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 dark:text-white">Frameworks & ML</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">PyTorch</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Keras</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">TensorFlow</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">YOLO v8/v11</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Scikit-learn</span>
+                    </div>
+                </div>
+                <!-- Tools -->
+                <div
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    <div
+                        class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="settings" class="text-navy dark:text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 dark:text-white">Infra & Tools</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Docker</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Hugging Face</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Notion</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Git</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">QGIS</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Linux</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Roboflow</span>
+                        <span class="px-3 py-1 bg-navy text-white text-xs font-semibold rounded-md">Tableau</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 bg-white dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center">Selected Projects</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">연구 성과와 기술적 해결 과정을 투명하게
+                공개합니다.</p>
+
+            <div class="space-y-32">
+                <div class="flex flex-col lg:flex-row gap-16 items-start">
+                    <div class="lg:w-1/2 space-y-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
+                            Research Paper / Reliable AI
+                        </div>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">Crop for Trust:
+                            Reliability-Aware Image Classification</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg">
+                            배경 노이즈나 무관한 특징(Shortcut)에 의존하는 딥러닝 모델의 취약성을 Gen AI와 YOLO를 활용한 데이터 독립적인 프레임워크로 해결했습니다.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">데이터 내 Artifacts에 과적합된 판단으로 인한 낮은
+                                    신뢰성과 편향된 Feature 학습</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">평균 정확도<strong>+4.69%</strong> 향상,
+                                    ESWA Journal 투고, KSC
+                                    2024 발표</p>
+                            </div>
+                        </div>
+                        <a href="project-crop-for-trust.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">
+                            상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <img src="Crop for Trust 프로젝트 이미지/method - 전체 파이프라인 이미지.jpg"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                alt="Pipeline">
+                        </div>
+                        <img src="Crop for Trust 프로젝트 이미지/results - grad-cam 이미지.png"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Grad-CAM">
+                        <img src="Crop for Trust 프로젝트 이미지/Crop for Trust 시연.gif"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Demo">
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-16 items-start">
+                    <div class="lg:w-1/2 space-y-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
+                            Data Analysis / Smart City
+                        </div>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">화성시 산업단지 맞춤형 화재 전략 제시</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg">
+                            화성시의 실제 데이터를 기반으로 산업단지의 화재 취약 지점을 분석하고, 대피소 공백 구역을 파악하여 산업단지 맞춤형 화재 전략을 제시했습니다.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">화성시는 전국 1위의 화재 발생 건수를 보이며 특히,
+                                    산업단지에서 가장 많은 화재가 발생</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400"><strong>전국단위 공모전 대상 수상</strong>,
+                                    실제 정책 반영을 위한 대피소 최적 위치 제안</p>
+                            </div>
+                        </div>
+                        <a href="project-hwaseong.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">
+                            상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <img src="화성시 프로젝트 이미지/화재 위험도 지수 모델링.jpg"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                alt="Analysis Result">
+                        </div>
+                        <div class="col-span-2">
+                            <img src="화성시 프로젝트 이미지/화성시 시연.gif"
+                                class="w-full h-64 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                                alt="Dashboard Demo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse gap-16 items-start">
+                    <div class="lg:w-1/2 space-y-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
+                            Model Optimization / Edge Device
+                        </div>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">RetinaFace Optimization</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg">
+                            얼굴 탐지 SOTA 모델인 RetinaFace의 아키텍처를 분석하여 FPN 구조 재설계, Attention 도입 등 아키텍처를 개선하고 성능을 검증했습니다.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">기존 RetinaFace 모델은 경량화 백본 적용 시 약
+                                    13%의 성능 급감</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Hard Case Average Precision
+                                    <strong>2.7%</strong> 개선, Custom Layer 설계 및 이식, 학과 1등
+                                </p>
+                            </div>
+                        </div>
+                        <a href="project-retinaface.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">
+                            상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <img src="RetinaFace 프로젝트 이미지/method - 개선 아키텍처.png"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                alt="Architecture">
+                        </div>
+                        <img src="RetinaFace 프로젝트 이미지/results - RetinaFace 탐지 시각화.png"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Detection Result">
+                        <img src="RetinaFace 프로젝트 이미지/results - 실험 결과.png"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Metrics">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Growth & Leadership Section -->
+    <section id="activities" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center">Academic Growth & Leadership
+            </h2>
+            <p class="text-slate-500 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">연구 성과 외에도 학술 공동체와 함께 성장하며
+                리더십을 발휘한 경험들을 소개합니다.</p>
+
+            <div class="space-y-32">
+                <!-- Activity 1: Leadership -->
+                <div class="flex flex-col lg:flex-row-reverse gap-16 items-start text-left">
+                    <div class="lg:w-1/2 space-y-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
+                            Leadership / Club Management
+                        </div>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">DS-Vision: Data Science Elite Club
+                            Leadership</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg">
+                            학문적 열정을 공유하는 동료들과 함께 성장하며 리더로서 커리큘럼을 설계하고, 다양한 학술 활동을 이끌었습니다.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Vision</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">함께 배우고 나눌 때 더 큰 시너지를 내는 데이터 과학
+                                    커뮤니티 구축</p>
+                            </div>
+                            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Achievement</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">교내 활동 최우수상 수여, 동아리 부원들의 공모전 다수 수상
+                                    지원 및 멘토링 수행</p>
+                            </div>
+                        </div>
+                        <a href="project-leadership.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">
+                            활동 상세 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <img src="Leadership 프로젝트 이미지/VLM 스터디 활동 이미지 - ppt 이미지 2.png"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Study">
+                        <img src="Leadership 프로젝트 이미지/취업동아리 활동 이미지 - 정기 회의 이미지.png"
+                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            alt="Meeting">
+                        <div class="col-span-2">
+                            <img src="Leadership 프로젝트 이미지/소자부식 예측 연구 이미지 - 결과 분석 이미지.png"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                alt="Analysis Result">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards & Honors -->
+    <section id="awards" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12">Awards & Honors</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Award Card -->
+                <div
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <img src="상장/제 2회 화성시 도시데이터 연구공모전.png"
+                        class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
+                        onclick="viewImage(this.src)">
+                    <h4 class="font-bold text-navy dark:text-blue-400 text-sm">전국 단위 공모전 대상</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">2025 제 2회 화성시 도시데이터 연구공모전</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <img src="상장/제 2회 AI빅데이터분석경진대회 장려상.jpg"
+                        class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
+                        onclick="viewImage(this.src)">
+                    <h4 class="font-bold text-navy dark:text-blue-400 text-sm">교내 공모전 장려상</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">2025 제 2회 AI 빅데이터분석 경진대회</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <img src="상장/2024 AI 빅데이터분석 경진대회 우수상.jpg"
+                        class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
+                        onclick="viewImage(this.src)">
+                    <h4 class="font-bold text-navy dark:text-blue-400 text-sm">교내 공모전 우수상</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">2024 제 1회 AI 빅데이터분석 경진대회</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <img src="상장/2024 취업동아리 최우수상.jpg"
+                        class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
+                        onclick="viewImage(this.src)">
+                    <h4 class="font-bold text-navy dark:text-blue-400 text-sm">교내 동아리 최우수상 (단체)</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">2024 취업동아리 성과발표회</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Section (Only visible after password entry) -->
+    <section id="admin" class="admin-only py-20 bg-yellow-50 border-t-4 border-yellow-200">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-yellow-800 flex items-center gap-2">
+                    <i data-lucide="shield-check"></i> Admin Mode - Contents Management
+                </h2>
+                <button onclick="logoutAdmin()"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded-lg text-sm font-bold">Logout</button>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-xl space-y-8">
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-4">Update Introduction</h3>
+                    <textarea id="admin-about"
+                        class="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent"
+                        rows="4"></textarea>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-4">Project Image Simulation</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 border-2 border-dashed border-slate-200 rounded-xl text-center">
+                            <input type="file" id="file-upload" class="hidden" onchange="simulateUpload(event)">
+                            <label for="file-upload" class="cursor-pointer flex flex-col items-center gap-2">
+                                <i data-lucide="upload-cloud" class="w-8 h-8 text-slate-400"></i>
+                                <span class="text-sm font-medium text-slate-500">Upload New Project Image</span>
+                            </label>
+                        </div>
+                        <div id="upload-preview"
+                            class="p-2 border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50">
+                            <span class="text-xs text-slate-400 text-center">Uploaded image will appear here
+                                (Simulation)</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="applyChanges()"
+                    class="w-full py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">Save
+                    & Update Site</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact" class="bg-navy dark:bg-slate-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <h4 class="text-xl font-bold mb-6">황경하 | Kyeongha</h4>
+                    <p class="text-slate-400 text-sm mb-6">데이터 중심 혁신으로 AI의 신뢰성을 증명하는 연구 전사적 엔지니어입니다.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Contact</h4>
+                    <ul class="space-y-4 text-slate-300">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            <a href="mailto:kyeonghah@gmail.com"
+                                class="hover:text-blue-400 transition-colors">kyeonghah@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4"></i> 010-7365-8184
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Channels</h4>
+                    <ul class="space-y-4 text-slate-300">
+                        <li><a href="https://github.com/kyeongha-git" target="_blank"
+                                class="hover:text-blue-400 flex items-center gap-3"><i data-lucide="github"
+                                    class="w-4 h-4"></i> GitHub</a></li>
+                        <li><a href="https://kyeongha-blog.tistory.com/" target="_blank"
+                                class="hover:text-blue-400 flex items-center gap-3"><i data-lucide="globe"
+                                    class="w-4 h-4"></i> T-Story Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Address</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        경기도 안산시 단원구 선부광장남로17<br>(기존: 수원대학교 데이터과학부)
+                    </p>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/10 text-center text-slate-500 text-xs">
+                &copy; 2025 KyeongHa Hwang. All Rights Reserved. Built with ❤️ and Research Passion.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Password Modal -->
+    <div id="admin-modal"
+        class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-sm:mx-4 max-w-sm">
+            <h3 class="text-xl font-bold text-navy mb-4">관리자 인증</h3>
+            <p class="text-sm text-slate-500 mb-6">수정 권한을 위해 비밀번호를 입력하세요.</p>
+            <input type="password" id="admin-pw"
+                class="w-full p-4 border border-slate-200 rounded-xl mb-4 focus:ring-2 focus:ring-navy outline-none"
+                placeholder="비밀번호 입력">
+            <div class="flex gap-3">
+                <button onclick="closeAdminModal()"
+                    class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl font-bold">취소</button>
+                <button onclick="verifyAdmin()" class="flex-1 py-3 bg-navy text-white rounded-xl font-bold">인증
+                    완료</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/90 p-10"
+        onclick="closeImage()">
+        <img id="modal-img" class="max-w-full max-h-full rounded-lg shadow-2xl">
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Dark Mode Logic
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        // Admin Logic
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function verifyAdmin() {
+            const pw = document.getElementById('admin-pw').value;
+            if (pw === 'sw135') {
+                document.body.classList.add('is-admin');
+                closeAdminModal();
+                window.scrollTo({
+                    top: document.getElementById('admin').offsetTop,
+                    behavior: 'smooth'
+                });
+                alert('관리자 모드가 활성화되었습니다. 수정 후 저장 버튼을 누르세요.');
+            } else {
+                alert('비밀번호가 틀렸습니다.');
+            }
+        }
+
+        function logoutAdmin() {
+            document.body.classList.remove('is-admin');
+            alert('로그아웃 되었습니다.');
+        }
+
+        // Image View Logic
+        function viewImage(src) {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-img');
+            img.src = src;
+            modal.classList.remove('hidden');
+        }
+
+        function closeImage() {
+            document.getElementById('image-modal').classList.add('hidden');
+        }
+
+        // Simulation Logic
+        function simulateUpload(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const preview = document.getElementById('upload-preview');
+                preview.innerHTML = `<img src="${event.target.result}" class="max-h-32 rounded-lg">`;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function applyChanges() {
+            const newText = document.getElementById('admin-about').value;
+            if (newText) {
+                alert('내용이 성공적으로 반영되었습니다. (LocalStorage 저장 시뮬레이션)');
+            } else {
+                alert('변경사항이 없습니다.');
+            }
+        }
+    </script>
+</body>
+
+</html>

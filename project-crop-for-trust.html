@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop for Trust | 상세 프로젝트 - 황경하</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { navy: '#003774' } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-navy dark:text-blue-400 font-bold">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Home
+            </a>
+            <button onclick="toggleDarkMode()"
+                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold mb-6">
+                RESEARCH & RELIABLE AI
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-blue-400 mb-8">Crop for Trust:
+                Reliability-Aware Image Classification</h1>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                딥러닝 모델이 핵심 객체가 아닌 배경의 가상 상관관계(Spurious Correlation)에 의존하는 'Shortcut Learning' 문제를 해결하고자 합니다. 이를
+                위해 Gen AI와 YOLO를 결합하여 데이터 의존성을 원천적으로 개선하는 강건한 객체 분리 및 정제 프레임워크를 개발했습니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="py-20 max-w-4xl mx-auto px-6 space-y-24">
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="alert-circle" class="text-red-500"></i> Problem Definition
+            </h2>
+            <div class="space-y-4 text-slate-700 dark:text-slate-300">
+                <p>현실의 딥러닝 모델들은 종종 학습 데이터셋에 내재된 '지배적인 배경 노이즈'를 타겟 레이블과 잘못 연관 지어 학습하는 오류를 범합니다. 예를 들어, 특정 클래스의 이미지가 특정
+                    배경과 함께 빈번히 등장할 경우, 모델은 객체의 본질적인 특성이 아닌 배경 텍스처를 판단 근거로 삼게 되며 이는 모델의 본질적인 신뢰성을 심각하게
+                    훼손합니다.</p>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Out-of-Distribution 환경에서의 극심한 일반화 성능 저하 발생.</li>
+                    <li>의사결정 과정의 불투명성으로 인한 XAI 관점에서의 신뢰성 및 해석력 결여.</li>
+                    <li>도메인 변이에 취약하여 실제 산업 현장 적용 시 이식성 한계 노출.</li>
+                </ul>
+                <img src="Crop for Trust 프로젝트 이미지/문제 정의 - 데이터셋 예시.png"
+                    class="w-full rounded-2xl shadow-lg mt-8 border border-slate-200 dark:border-slate-800"
+                    alt="Problem Example">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="component" class="text-blue-500"></i> Methodology & Architecture
+            </h2>
+            <div class="space-y-8 text-slate-700 dark:text-slate-300">
+                <p>본 연구는 모델 아키텍처의 변경 없이 데이터 자체의 품질을 향상시키는 Data-Centric AI 패러다임을 채택하여, 배경 노이즈를 원천적으로 차단하는
+                    파이프라인을 설계했습니다.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">1. GAC (Generative Annotation
+                            Cleaning)</h3>
+                        <p class="text-sm">Gemini 2.5 Flash 모델의 API를 활용하여, Zero-Shot 방식으로 데이터셋 내에 포함된
+                            시각적 편향 (Visual Marking)을 정밀하게 제거합니다. 이를 통해 모델이 객체 외부의 통계적 특성에 의존하는 것을 방지합니다.</p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">2. ROI Focusing (YOLO-Crop)</h3>
+                        <p class="text-sm">YOLO v8 모델을 활용하여 이미지 내 객체의 위치를 탐지하고, 해당 영역을 제외한 배경을 제거합니다. 이를 통해 모델이 배경으로
+                            Attention이 분산되는 현상을 물리적으로 차단하고 객체 고유의 특징에만 집중하도록 강제합니다.</p>
+                    </div>
+                </div>
+
+                <img src="Crop for Trust 프로젝트 이미지/method - 전체 파이프라인 이미지.jpg"
+                    class="w-full rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800" alt="Pipeline">
+
+                <div class="p-6 bg-slate-100 dark:bg-slate-900 rounded-xl">
+                    <h4 class="font-bold mb-2">Technical Keywords:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-xs font-semibold">Gen AI
+                            (Gemini API)</span>
+                        <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-xs font-semibold">YOLOv2 ~
+                            YOLOv8</span>
+                        <span
+                            class="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-xs font-semibold">Grad-CAM</span>
+                        <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-xs font-semibold">Data-Centric
+                            AI</span>
+                        <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg text-xs font-semibold">Shortcut
+                            Learning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="trending-up" class="text-green-500"></i> Results & Impact
+            </h2>
+            <div class="space-y-6 text-slate-700 dark:text-slate-300">
+                <p>모델의 의사결정 과정을 시각화하는 Grad-CAM 분석 결과, <strong>기존 베이스라인 모델은 배경의 무의미한 텍스처에 강한 Attention을 기울이는 한계</strong>를
+                    보였습니다. 반면,
+                    'Crop for Trust' 파이프라인이 적용된 모델은 <strong>추론의 근거가 핵심 객체의 형태와 특징으로 정확히 이동하였음을 입증</strong>하여, 산업 현장에서
+                    요구되는 높은 해석 가능성과 신뢰성을 확보했습니다.
+                </p>
+                <img src="Crop for Trust 프로젝트 이미지/results - grad-cam 이미지.png"
+                    class="w-full rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                    alt="Grad-CAM Result">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                    <div class="text-center p-6 bg-navy text-white rounded-2xl">
+                        <div class="text-4xl font-bold mb-2">+4.69%</div>
+                        <div class="text-xs opacity-80 uppercase tracking-widest font-bold">Accuracy Gain</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400 uppercase">KSC 2024</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Paper Presentation</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">ESWA Entry</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">IF: 7.5 Journal Submit
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-8">감사합니다. 다른 프로젝트도 확인해 보세요.</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="project-retinaface.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">RetinaFace
+                    Optimization</a>
+                <a href="project-hwaseong.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Spatial
+                    Data Study</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+
+</html>

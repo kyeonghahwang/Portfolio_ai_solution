@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화성시 화재 취약 분석 | 상세 프로젝트 - 황경하</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { navy: '#003774' } } }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-navy dark:text-blue-400 font-bold">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Home
+            </a>
+            <button onclick="toggleDarkMode()"
+                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold mb-6">
+                DATA ANALYSIS / SMART CITY
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-blue-400 mb-8">화성시 산업단지 맞춤형 화재 전략 제시</h1>
+            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                화성시의 화재 요인 데이터를 다차원 변수로 모델링하여, 산업단지 구역별 화재 위험도를 정량적으로 분석하고 최적의 대피소 위치를 제안했습니다.
+            </p>
+        </div>
+    </header>
+
+    <main class="py-20 max-w-4xl mx-auto px-6 space-y-24">
+        <!-- Problem -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="map-pin" class="text-red-500"></i> Problem Definition
+            </h2>
+            <div class="space-y-4 text-slate-700 dark:text-slate-300">
+                <p>화성시는 지난 10년간 약 8009건의 화재 발생 건수를 보이며 전국 1위를 달성하였으며, 그 중 1799건이 산업단지에서 발생하는 등 산업단지의 화재 대응 전략이 부족합니다.
+                </p>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>다양한 화재 요인 분석 및 정량적 위험도 산정 필요.</li>
+                    <li>정량적 분석 뿐만 아니라, 공간 분석을 통해 구체적인 전략 제시 필요.</li>
+                    <li>데이터 기반의 검증을 통한 신뢰성 있는 결과 도출 필요.</li>
+                </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <img src="화성시 프로젝트 이미지/화성시 화재 발생 그래프.png"
+                            class="w-full max-w-md h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            alt="Statistics">
+                        <p class="text-sm font-bold text-navy dark:text-blue-400">10년간 전국 지역별 화재 총 건수 TOP5</p>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <img src="화성시 프로젝트 이미지/화성시 발화지점별 화재 발생 그래프.png"
+                            class="w-full max-w-md h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            alt="Spatial Analysis">
+                        <p class="text-sm font-bold text-navy dark:text-blue-400">화성시 내 발화 지점별 화재 총 건수 TOP5</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="database" class="text-blue-500"></i> Methodology
+            </h2>
+            <div class="space-y-8 text-slate-700 dark:text-slate-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">1. Fire Risk Scoring</h3>
+                        <p class="text-sm">선행 연구를 바탕으로, 화재 위험 변수를 선정한 후 데이터를 수집 및 전처리하여 산업단지별 화재 위험도를 산출하여, Top 3 지역을
+                            선정합니다.</p>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-navy dark:text-blue-400 mb-3 text-lg">2. Network Analysis (QGIS)</h3>
+                        <p class="text-sm">선정된 Top 3 산업단지를 기준으로, 산업단지 내 구역별 소방차의 접근성(4m), 소방서와의 거리, 인프라 등을 고려하여 버퍼분석 및
+                            네트워크 분석을 통해 최종적인 화재 위험도를 재산출합니다.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center space-y-4 pt-4">
+
+                    <div class="flex flex-col items-center gap-3 w-full">
+                        <img src="화성시 프로젝트 이미지/화재 위험도 지수 모델링.jpg"
+                            class="w-full h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            alt="Modeling Framework">
+                        <p class="text-sm font-bold text-navy dark:text-blue-400">산업단지별 화재 위험도 산출 모델</p>
+                    </div>
+
+                    <div class="py-4">
+                        <i data-lucide="arrow-down-circle" class="w-10 h-10 text-slate-400 dark:text-slate-500"></i>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-3 w-full">
+                        <img src="화성시 프로젝트 이미지/변수별 위험도 시각화.png"
+                            class="w-full h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            alt="Risk Visualization">
+                        <p class="text-sm font-bold text-navy dark:text-blue-400">산업단지 내 구역별 화재 위험도 분석 모델</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i data-lucide="trophy" class="text-green-500"></i> Impact & Recognition
+            </h2>
+            <div class="space-y-6 text-slate-700 dark:text-slate-300">
+                <p>Grid 기반의 정밀 공간 분석을 통해, 산업단지별 화재 고위험 지역을 선정 후 도보 대피 가능 거리(600m)를 기준으로 버퍼 분석을 진행했습니다. 분석 결과, 고위험 지역으로부터
+                    <strong>기존 대피소의 대피 경로에 산이 위치하여 대피가 불가함</strong>을 확인했으며, 이에 최적의 대피소 위치를 제안했습니다.
+                </p>
+
+                <div class="flex flex-col items-center space-y-12 pt-4">
+
+                    <div class="w-full max-w-xl flex flex-col items-center gap-3">
+                        <img src="화성시 프로젝트 이미지/최종 결과 - 고위험 지역 기준 600m 버퍼 및 대피소 시각화.png"
+                            class="w-full h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            alt="Final Visualization">
+                        <p class="text-sm font-bold text-slate-600 dark:text-slate-400">
+                            <span class="text-green-600 dark:text-green-400">(초록색 별)</span>: 기존 대피소,
+                            <span class="text-red-600 dark:text-red-400">(빨간색 별)</span>: 제안된 대피소 위치
+                        </p>
+                    </div>
+
+                    <div class="w-full max-w-3xl flex flex-col items-center gap-3">
+                        <video class="w-full h-auto rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800"
+                            controls muted autoplay loop>
+                            <source src="화성시 프로젝트 이미지/웹 사이트 시연.mp4" type="video/mp4">
+                            브라우저가 동영상을 지원하지 않습니다.
+                        </video>
+                        <p class="text-sm font-bold text-navy dark:text-blue-400">화성시 화재 취약 분석 대시보드 시연</p>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                    <div class="text-center p-6 bg-navy text-white rounded-2xl shadow-lg">
+                        <div class="text-4xl font-bold mb-2">1st Place</div>
+                        <div class="text-xs opacity-80 uppercase tracking-widest font-bold">Grand Prize Winner</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">Policy Idea</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Proposal Accepted</div>
+                    </div>
+                    <div class="text-center p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+                        <div class="text-3xl font-bold mb-2 text-navy dark:text-blue-400">Streamlit</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Visualization Dash</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-8">다른 프로젝트 보러가기</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="project-crop-for-trust.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">Crop
+                    for Trust</a>
+                <a href="project-retinaface.html"
+                    class="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:shadow-md transition-all">RetinaFace
+                    Optimization</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+
+</html>
