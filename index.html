@@ -231,19 +231,22 @@
                         <h3 class="text-3xl font-bold text-navy dark:text-white">Crop for Trust:
                             Reliability-Aware Image Classification</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            배경 노이즈나 무관한 특징(Shortcut)에 의존하는 딥러닝 모델의 취약성을 Gen AI와 YOLO를 활용한 데이터 독립적인 프레임워크로 해결했습니다.
+                            차량 유리 손상 이미지의 이진 분류 자동화 과정에서 모델이 <strong class="text-navy dark:text-blue-400">손상이 아닌 보조
+                                기호(마킹)를 보고 판단</strong>하는 Shortcut 문제를 Data-Centric 접근으로 해결했습니다.
                         </p>
 
                         <div class="space-y-4">
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">데이터 내 Artifacts에 과적합된 판단으로 인한 낮은
+                                <p class="text-sm text-slate-600 dark:text-slate-400">데이터 내 마킹(Shortcut)에 과적합된 판단으로 인한
+                                    낮은
                                     신뢰성과 편향된 Feature 학습</p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">평균 정확도 <strong>+4.69%</strong> 향상,
-                                    ESWA Journal 투고, KSC 2024 발표</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">평균 정확도 <strong>+4.69%</strong> 향상
+                                    (최고 93.40%),
+                                    ESWA 저널 투고, KSC 2024 학술대회 게재</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
@@ -289,21 +292,22 @@
                                 Data Analysis / Urban AI
                             </div>
                         </div>
-                        <h3 class="text-3xl font-bold text-navy dark:text-white">화성시 산업단지 맞춤형 화재 전략 제시</h3>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">화성시 산업단지 맞춤형 화재 대응 전략</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            화성시의 실제 데이터를 기반으로 산업단지의 화재 취약 지점을 분석하고, 대피소 공백 구역을 파악하여 산업단지 맞춤형 화재 전략을 제시했습니다.
+                            전국 최다 화재 발생 도시인 화성시의 실제 데이터를 기반으로 GIS 분석·네트워크 분석으로 화재 취약 지점과 대피소 공백 구역을 파악하여 맞춤형 전략을 제안했습니다.
                         </p>
 
                         <div class="space-y-4">
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">화성시는 전국 1위의 화재 발생 건수를 보이며 특히,
-                                    산업단지에서 가장 많은 화재가 발생</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">화성시는 8,009건(전국 최다) 화재 발생, 그 중
+                                    산업단지에서
+                                    가장 많이 발생하지만 기존 소방 인프라는 이에 최적화되어 있지 않음</p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400"><strong>전국단위 공모전 대상 수상</strong>,
-                                    실제 정책 반영을 위한 대피소 최적 위치 제안</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400"><strong>전국 대학생 공모전 대상 수상</strong>,
+                                    T-MAP 기반 실시간 거리 산출 및 대피소 최적 위치 제안</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
@@ -315,7 +319,8 @@
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Spatial
                                 Analysis</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Streamlit</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">T-MAP
+                                API</span>
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Network
                                 Analysis</span>
@@ -349,21 +354,25 @@
                                 Model Optimization / Edge Device
                             </div>
                         </div>
-                        <h3 class="text-3xl font-bold text-navy dark:text-white">RetinaFace Optimization</h3>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">RetinaFace Architecture Optimization
+                        </h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            얼굴 탐지 SOTA 모델인 RetinaFace의 아키텍처를 분석하여 FPN 구조 재설계, Attention 도입 등 아키텍처를 개선하고 성능을 검증했습니다.
+                            경량 백본(MobileNet-v1) 기반 RetinaFace에 WFPN·ECA-CBAM·SCM·Deformable Conv을 도입하여 FLOPs 증가
+                            최소화(+0.09G)로 Hard Case 탐지 성능을 끌어올린 캡스톤 프로젝트입니다.
                         </p>
 
                         <div class="space-y-4">
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">기존 RetinaFace 모델은 경량화 백본 적용 시 약
-                                    13%의 성능 급감</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">ResNet-152 → MobileNet-v1 교체 시 AP
+                                    약
+                                    13 포인트 급감 — 경량화와 고성능의 양립이 불가</p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Hard Case Average Precision
-                                    <strong>2.7%</strong> 개선, Custom Layer 설계 및 이식, 학과 1등
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Hard mAP <strong>+2.7 AP</strong>
+                                    향상,
+                                    4개 Custom Module 설계·이식, 학과 캡스톤 1등
                                 </p>
                             </div>
                         </div>
@@ -373,10 +382,9 @@
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">PyTorch</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">CBAM
-                                / ECA</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">ECA-CBAM</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">FPN</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">WFPN</span>
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Deformable
                                 Conv</span>
@@ -418,24 +426,23 @@
                     <div class="lg:w-1/2 space-y-6">
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
-                            Leadership / Club Management
+                            Leadership & Activities
                         </div>
-                        <h3 class="text-3xl font-bold text-navy dark:text-white">DS-Vision: Data Science Elite Club
-                            Leadership</h3>
+                        <h3 class="text-3xl font-bold text-navy dark:text-white">Activities & Experiences</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            학문적 열정을 공유하는 동료들과 함께 성장하며 리더로서 커리큘럼을 설계하고, 다양한 학술 활동을 이끌었습니다.
+                            KT 디지털인재 장학생, 취업동아리 대표, 소자 부식 예측 연구, VLM 논문 스터디까지 — 기술 역량을 넘어선 다양한 협업·리더십·학습 경험을 담았습니다.
                         </p>
 
                         <div class="space-y-4">
                             <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Vision</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">함께 배우고 나눌 때 더 큰 시너지를 내는 데이터 과학
-                                    커뮤니티 구축</p>
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Highlights</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">KT 현직자 협업 · 17인 동아리 리더십 · 45만건
+                                    Tabular 분석 · VLM 논문 17편 스터디</p>
                             </div>
                             <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
                                 <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Achievement</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">교내 활동 최우수상 수여, 동아리 부원들의 공모전 다수 수상
-                                    지원 및 멘토링 수행</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">교내 취업동아리 최우수상 · 교외 공모전 최우수상 ·
+                                    취업동아리 17명 전원 수료</p>
                             </div>
                         </div>
                         <a href="project-leadership.html"
