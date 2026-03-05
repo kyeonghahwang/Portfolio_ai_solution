@@ -87,10 +87,33 @@
         .dark .experiment-card {
             border-left-color: #60a5fa;
         }
+
+        /* 100% 줌 레벨 기준 글자 크기 */
+        html {
+            font-size: 15px;
+        }
+
+
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-navy);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        .dark #progress-bar {
+            background: #60a5fa;
+        }
     </style>
 </head>
 
 <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <div id="progress-bar"></div>
 
     <!-- Nav -->
     <nav
@@ -100,11 +123,13 @@
                 class="flex items-center gap-2 text-navy dark:text-blue-400 font-semibold text-sm hover:opacity-70 transition-opacity">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i> 포트폴리오로 돌아가기
             </a>
-            <button onclick="toggleDarkMode()"
-                class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
-                <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleDarkMode()"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -122,7 +147,7 @@
                 해결한 연구입니다.</p>
 
             <!-- Quick Impact Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl mb-8">
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">+4.69%</div>
                     <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">Accuracy Gain</div>
@@ -140,6 +165,14 @@
                     <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">SCI저널 투고</div>
                 </div>
             </div>
+
+            <!-- GitHub 링크 버튼 -->
+            <a href="https://github.com/kyeongha-git/Crop-for-Trust" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/25 text-white text-sm font-semibold rounded-xl transition-all backdrop-blur-sm">
+                <i data-lucide="github" class="w-4 h-4"></i>
+                GitHub에서 코드 보기
+                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-70"></i>
+            </a>
         </div>
     </header>
 
@@ -155,7 +188,7 @@
                 </div>
             </div>
 
-            <p class="text-slate-600 dark:text-slate-300 mb-6">차량 유리 손상 이미지를 분류하는 AI를 개발하면서, 모델이 실제 손상 부위가 아닌 <strong
+            <p class="text-slate-600 dark:text-slate-300 mb-6">차량 유리 손상 이미지를 분류 AI를 개발하면서, 모델이 실제 손상 부위가 아닌 <strong
                     class="text-navy dark:text-blue-400">다른 시각적 요소에 의존하여 판단</strong>하는 두 가지 구조적 문제를 발견했습니다.</p>
 
             <div class="grid md:grid-cols-2 gap-6 mb-8">
@@ -164,7 +197,7 @@
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
                         <h3 class="font-bold text-navy dark:text-white">문제 1: Data Distribution (Overfitting)</h3>
                     </div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">손상 식별을 위해 이미지에 표기한
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">손상 식별을 위해 표기한
                         <strong>Marking</strong>이 클래스 간 불균형하게 존재합니다.
                     </p>
                     <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1">
@@ -211,8 +244,9 @@
             <div
                 class="mt-6 p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                 <p class="text-sm text-slate-600 dark:text-slate-300"><strong
-                        class="text-navy dark:text-blue-400">결론적으로</strong>, 두 문제의 공통점은 모델이 손상 부위에 집중하지 못하게 만들며, 이는 곧 모델
-                    결과를 신뢰할 수 없도록 한다는 것입니다.</p>
+                        class="text-navy dark:text-blue-400">결론적으로</strong>, 두 문제의 공통점은 모델이 손상 부위에 집중하지 못하게 만들며, 이는 곧
+                    <strong class="text-navy dark:text-blue-400">모델 결과를 신뢰할 수 없도록 한다</strong>는 것입니다.
+                </p>
             </div>
         </section>
 
@@ -238,8 +272,8 @@
                         Pipeline A — Marking 제거</div>
                     <h3 class="font-bold text-lg text-navy dark:text-white mb-3">GAC (Generative Annotation Cleaning)
                     </h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4"><strong>Gemini 2.5 Flash</strong> 멀티모달
-                        모델에 이미지를 입력하고, instruction-guided 프롬프트로 배경은 유지하면서 손상 주변의 Marking만 선택적으로 제거합니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4"><strong>Gemini 2.5 Flash</strong> 모델에
+                        이미지를 입력하고, instruction-guided 방식으로 배경은 유지하면서 손상 주변의 <strong>Marking만 선택적으로 제거</strong>합니다.</p>
                     <div class="flex flex-wrap gap-1.5">
                         <span
                             class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300">Gemini
@@ -249,7 +283,7 @@
                             Prompting</span>
                         <span
                             class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300">Generative
-                            Inpainting</span>
+                            Cleaning</span>
                     </div>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
@@ -257,7 +291,7 @@
                         Pipeline B — 배경 제거</div>
                     <h3 class="font-bold text-lg text-navy dark:text-white mb-3">YOLO-Crop (ROI Focusing)</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 mb-4"><strong>YOLO (v2/v4/v5/v8)</strong>로 손상
-                        부위를 탐지하고, 해당 영역만 크롭합니다. 이를 통해 Marking과 배경을 동시에 물리적으로 제거하여, 모델이 손상 특징에만 집중하도록 강제합니다.</p>
+                        부위를 탐지하고, 해당 영역만<strong> 크롭</strong>합니다. 이를 통해 배경을 물리적으로 제거하여, 모델이 손상에만 집중하도록 강제합니다.</p>
                     <div class="flex flex-wrap gap-1.5">
                         <span
                             class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300">YOLOv2/v4/v5/v8</span>
@@ -331,9 +365,10 @@
                         Experiment 1</div>
                     <h3 class="font-bold text-lg text-navy dark:text-white mb-3">GAC 성능 검증 — Self-Supervised Protocol
                     </h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">GAC의 성능을 정밀 측정하기 위한 자체 프로토콜을 설계했습니다.
-                        마킹이 없는 이미지를 GT로 설정하고, 강제로 마킹을 추가한 뒤 GAC로 복원한 결과와 다양한 Anchor(JPEG 압축, Blur, 다른 손상과 Mix,
-                        OOD)를 비교합니다. 그 결과, JPEG, Blur와 집단과 유사한 군집을 형성하며, GAC의 채택 근거를 마련했습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">GAC의 성능을 정밀 측정하기 위한 <strong>자체
+                            프로토콜</strong>을 설계했습니다.
+                        마킹이 없는 이미지를 GT로 설정하고, 마킹을 추가한 뒤 GAC의 복원 결과와 다양한 <strong>Anchor</strong>를
+                        비교합니다.</p>
                     <p class="text-xs font-medium text-slate-500 mb-2 uppercase tracking-wide">평가 지표</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded">Feature Map
@@ -343,12 +378,22 @@
                         <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded">PSNR</span>
                     </div>
                     <!-- GAC 검증 이미지 -->
-                    <div>
+                    <div class="mt-6">
                         <img src="Crop for Trust 프로젝트 이미지/fig8.png"
-                            class="w-full rounded-xl border border-slate-200 dark:border-slate-700"
+                            class="w-full max-w-[500px] mx-auto block rounded-xl border border-slate-200 dark:border-slate-700"
                             alt="GAC Validation">
+
                         <p class="text-xs text-slate-400 mt-2 text-center">GAC 성능 검증: Scatter Plot (Edge L1 vs. Feature
                             Map Distance)</p>
+                    </div>
+                    <div
+                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
+                        <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300"><strong
+                                class="text-navy dark:text-blue-400">GAC</strong>는 원본과 거의 차이가 없는 약한
+                            <strong>Blur</strong>, <strong>JPEG</strong> 집단과 유사한
+                            군집을 형성하며, 생성형 AI의 실무 도입 가능성을 확인했습니다.
+                        </p>
                     </div>
                 </div>
 
@@ -357,8 +402,9 @@
                     <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
                         Experiment 2</div>
                     <h3 class="font-bold text-lg text-navy dark:text-white mb-3">YOLO-Crop 필요성 검증 — 비교 실험</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">배경 제거의 다양한 방법(GAC / Blur / Black-out /
-                        YOLO-Crop)을 동일한 CNN에 학습시켜 분류 성능을 비교하여, YOLO-Crop의 채택 근거를 마련했습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">원본 이미지에 배경 제거의 다양한 방법(GAC / Blur /
+                        Black-out /
+                        YOLO-Crop)을 적용 후, 동일한 분류 모델의 성능을 비교하여 YOLO-Crop의 채택을 검증합니다.</p>
                     <div class="overflow-x-auto mt-6 mb-2">
                         <table class="w-full text-sm text-left border-collapse whitespace-nowrap">
                             <thead>
@@ -402,7 +448,8 @@
                     <div
                         class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
                         <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">GAC / Blur / Black-out 기법은 정확도 90% 미만에
+                        <p class="text-sm text-slate-600 dark:text-slate-300"><strong>GAC / Blur / Black-out</strong>
+                            기법은 정확도 <strong>90% 미만</strong>에
                             머물렀으나, <strong class="text-navy dark:text-blue-400">YOLO-Crop은 97.46%</strong>로 타 방법론 대비 월등히
                             뛰어난 성능을 보였습니다.</p>
                     </div>
@@ -414,9 +461,9 @@
                         Experiment 3</div>
                     <h3 class="font-bold text-lg text-navy dark:text-white mb-3">Attention Alignment 검증 — Grad-CAM 시각화
                     </h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Original vs. YOLO-Crop 데이터셋으로 학습된 모델의
-                        Grad-CAM을 시각화하여, YOLO-Crop이 Attention을 실제 손상 부위로 정렬시킨다는 것을 정성적으로 입증했습니다. 추가로 GAC·Hybrid 데이터셋에서도
-                        동일한 결과를 확인하여, Attention Alignment는 Marking 유무와 독립적임을 검증했습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Original과 YOLO-Crop 데이터셋으로 동일한 분류 모델을
+                        학습시키고, 동일한 이미지에 대하여 <strong class="text-navy dark:text-blue-400">Grad-CAM 시각화</strong>를 통해
+                        Attention Alignment를 비교합니다.</p>
                     <!-- Grad-CAM 이미지 -->
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
@@ -432,7 +479,19 @@
                             <p class="text-xs text-slate-400 mt-2 text-center">GAC 데이터에 대한 Attention Alignment</p>
                         </div>
                     </div>
+                    <div
+                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
+                        <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300">주위 배경으로 분산되지 않고, <strong>손상</strong>으로
+                            <strong class="text-navy dark:text-blue-400">Attention이
+                                Alignment</strong>되는 것을 확인했습니다. 또한, 동일 실험을 <strong
+                                class="text-navy dark:text-blue-400">GAC 데이터셋</strong>에서 수행했을 때에도 같은 결과를
+                            보임을 통해 배경이 손상의 Attention을 분산시키는
+                            현상은 <strong class="text-navy dark:text-blue-400">Marking의 유무와 관계가 없음</strong>을 입증했습니다.
+                        </p>
+                    </div>
                 </div>
+
             </div>
         </section>
 
@@ -451,7 +510,8 @@
             <div class="grid md:grid-cols-3 gap-4 mb-8">
                 <div class="p-5 bg-navy text-white rounded-xl">
                     <div class="text-3xl font-bold mb-1">+4.69%</div>
-                    <div class="text-sm text-blue-200">Hybrid vs. GAC 기반 Fair Baseline 비교 시 정확도 향상</div>
+                    <div class="text-sm text-blue-200"><strong class="text-white">Hybrid</strong> vs. <strong
+                            class="text-white">GAC</strong> 기반 <strong>Fair Baseline</strong> 비교 시 정확도 향상</div>
                 </div>
                 <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <div class="text-xl font-bold text-navy dark:text-blue-400 mb-1">2024 KSC</div>
@@ -467,7 +527,7 @@
                 <img src="Crop for Trust 프로젝트 이미지/fig11.png"
                     class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"
                     alt="Accuracy Comparison">
-                <p class="text-xs text-slate-400 mt-2 text-center">Original / YOLO-Crop / GAC / Hybrid 데이터셋별 분류 정확도 비교
+                <p class="text-xs text-slate-400 mt-2 text-center"> 방법론 적용 후 분류 정확도 비교 결과 (Baseline: 88.71%)
                 </p>
             </div>
 
@@ -514,33 +574,33 @@
             <div class="section-label mb-4">Tech Stack Used</div>
             <div class="flex flex-wrap gap-2">
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Python</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Python</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">PyTorch</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">PyTorch</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Linux</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Linux</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Git</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Git</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Hugging
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Hugging
                     Face</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">YOLOv2/v4/v5/v8</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">YOLOv2/v4/v5/v8</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Gemini
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Gemini
                     API</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">VGG16
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">VGG16
                     / ResNet152 / MobileNet</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Grad-CAM</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Grad-CAM</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Streamlit</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Streamlit</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Hugging
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Hugging
                     Face Spaces</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Data-Centric
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Data-Centric
                     AI</span>
             </div>
         </section>
@@ -574,21 +634,29 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+
+
+        // Progress Bar
+        window.onscroll = function () {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            const pb = document.getElementById("progress-bar");
+            if (pb) pb.style.width = scrolled + "%";
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-        }
+
+        lucide.createIcons();
     </script>
 </body>
 

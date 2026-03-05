@@ -90,10 +90,73 @@
         body {
             transition: background-color 0.3s, color 0.3s;
         }
+
+        /* 브라우저 80% 돋보기 환경과 동일하게 전체 축소 */
+        html {
+            zoom: 0.8;
+        }
+
+        /* ===== 스크롤 프로그레스 바 ===== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #003774, #2563eb, #60a5fa);
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* ===== Reveal 스크롤 애니메이션 ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 지연 변형 (순차 등장 효과) */
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        /* ===== Hover-lift 카드 효과 ===== */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 55, 116, 0.15);
+        }
+
+        .dark .hover-lift:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
     </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed">
+
+    <!-- 스크롤 프로그레스 바 -->
+    <div id="scroll-progress"></div>
 
     <!-- Navigation -->
     <nav
@@ -123,7 +186,7 @@
     </nav>
 
     <!-- Hero / About Me -->
-    <section id="about" class="py-20 bg-white dark:bg-slate-950">
+    <section id="about" class="py-20 bg-white dark:bg-slate-950 reveal">
         <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
             <div class="relative group">
                 <div
@@ -175,11 +238,12 @@
     <!-- Tech Stack -->
     <section id="tech" class="py-20 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12 text-center">Technical Expertise</h2>
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12 text-center reveal">Technical Expertise
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Languages -->
                 <div
-                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 reveal reveal-delay-1 hover-lift">
                     <div
                         class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                         <i data-lucide="code-2" class="text-navy dark:text-blue-400 w-6 h-6"></i>
@@ -193,7 +257,7 @@
                 </div>
                 <!-- Frameworks -->
                 <div
-                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 reveal reveal-delay-2 hover-lift">
                     <div
                         class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                         <i data-lucide="layers" class="text-navy dark:text-blue-400 w-6 h-6"></i>
@@ -209,7 +273,7 @@
                 </div>
                 <!-- Tools -->
                 <div
-                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 reveal reveal-delay-3 hover-lift">
                     <div
                         class="w-12 h-12 bg-navy/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                         <i data-lucide="settings" class="text-navy dark:text-blue-400 w-6 h-6"></i>
@@ -232,13 +296,13 @@
 
     <section id="projects" class="py-20 bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center">Selected Projects</h2>
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center reveal">Selected Projects</h2>
             <p class="text-slate-500 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">연구 성과와 기술적 해결 과정을 투명하게
                 공개합니다.</p>
 
             <div class="space-y-32">
-                <div class="flex flex-col lg:flex-row gap-16 items-start">
-                    <div class="lg:w-1/2 space-y-6">
+                <div class="flex flex-col lg:flex-row gap-16 items-stretch reveal">
+                    <div class="lg:w-1/2 space-y-6 min-h-[560px]">
                         <div class="flex items-center gap-4">
                             <span
                                 class="text-6xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">01</span>
@@ -250,33 +314,69 @@
                         <h3 class="text-3xl font-bold text-navy dark:text-white">Crop for Trust:
                             Reliability-Aware Image Classification</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            차량 유리 손상 이미지의 이진 분류 자동화 과정에서 모델이 <strong class="text-navy dark:text-blue-400">손상이 아닌 보조
-                                기호(마킹)를 보고 판단</strong>하는 Shortcut 문제를 Data-Centric 접근으로 해결했습니다.
+                            산업 데이터의 <strong class="text-navy dark:text-blue-400">Shortcut 편향과 Attention
+                                Misalignment</strong>를 규명하고, 생성형 AI와 객체 탐지 기반 파이프라인으로 분류 신뢰성을 확보한 연구입니다.
                         </p>
 
-                        <div class="space-y-4">
-                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">데이터 내 마킹(Shortcut)에 과적합된 판단으로 인한
-                                    낮은
-                                    신뢰성과 편향된 Feature 학습</p>
+                        <!-- Role & Contribution 뱃지 -->
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-navy/10 dark:bg-blue-950/60 text-navy dark:text-blue-300 text-xs font-semibold rounded-lg border border-navy/20 dark:border-blue-800/50">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>Role</strong>: 연구 총괄 설계 · 실험 · 논문 작성</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800/50">
+                                <i data-lucide="pie-chart" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>기여도</strong>: 100% (개인 연구)</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/30 shrink-0">
+                                    <i data-lucide="alert-triangle"
+                                        class="w-3.5 h-3.5 text-red-500 dark:text-red-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Problem.</strong>
+                                    데이터 내 편향과 배경 노이즈가 과도하게 포함되어 과적합 및 Attention 분산 발생
+                                </p>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/30 shrink-0">
+                                    <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Solution.</strong>
+                                    GAC(Gemini API 기반 편향 제거) + YOLO-Crop(손상 부위 자동 추출) 파이프라인 설계
+                                </p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">분류 정확도 <strong>97.46%</strong> 달성
-                                    (기존 대비 <strong>+4.06%p</strong> 향상), KCI 학술대회 발표 및 학술지 투고 완료</p>
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1 flex items-center gap-1.5">
+                                    <i data-lucide="trophy" class="w-3.5 h-3.5"></i> Key Results
+                                </h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">ESWA 저널 <strong>(IF: 8.7)</strong>
+                                    투고(심사 중) / KSC 2024 게재 · 분류 정확도 <strong>93.40%%</strong> 달성
+                                    <strong>(+4.69%p↑)</strong>
+                                </p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Python</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">YOLOv8</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Pytorch</span>
+                            <span
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Docker</span>
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Gemini
                                 API</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">PyTorch</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">YOLO</span>
+
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Grad-CAM</span>
                         </div>
@@ -285,23 +385,23 @@
                             상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
-                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4 h-[580px]" style="grid-template-rows: auto 1fr">
                         <div class="col-span-2">
                             <img src="Crop for Trust 프로젝트 이미지/fig3.png"
-                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 hover-lift"
                                 alt="Pipeline">
                         </div>
                         <img src="Crop for Trust 프로젝트 이미지/head.png"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Grad-CAM">
                         <img src="Crop for Trust 프로젝트 이미지/Crop for Trust 시연.gif"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Demo">
                     </div>
                 </div>
 
-                <div class="flex flex-col lg:flex-row gap-16 items-start">
-                    <div class="lg:w-1/2 space-y-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-16 items-stretch reveal">
+                    <div class="lg:w-1/2 space-y-6 min-h-[560px]">
                         <div class="flex items-center gap-4">
                             <span
                                 class="text-6xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">02</span>
@@ -312,59 +412,90 @@
                         </div>
                         <h3 class="text-3xl font-bold text-navy dark:text-white">화성시 산업단지 맞춤형 화재 대응 전략</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            YOLO 기반 객체 검출과 ROI 크롭핑을 결합한 GAC(Grid Attention Crop) 프레임워크를 제안하여, 복잡한 배경의 농작물 이미지 분류 성능을
-                            <strong>97.46%</strong>까지 끌어올린 연구 프로젝트입니다.
+                            전국 최다 화재 지자체인 화성시의 <strong class="text-navy dark:text-blue-400">산업단지 화재 취약 구역과
+                                대피 인프라 공백</strong>을 데이터로 규명하고, 맞춤형 대응 전략을 제안한 공모전 프로젝트입니다.
                         </p>
 
-                        <div class="space-y-4">
-                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">화성시는 8,009건(전국 최다) 화재 발생, 그 중
-                                    산업단지에서
-                                    가장 많이 발생하지만 기존 소방 인프라는 이에 최적화되어 있지 않음</p>
+                        <!-- Role & Contribution 뱃지 -->
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-navy/10 dark:bg-blue-950/60 text-navy dark:text-blue-300 text-xs font-semibold rounded-lg border border-navy/20 dark:border-blue-800/50">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>Role</strong>: 프로젝트 총괄(팀 리더) · 방법론 설계 · 데이터 분석 · 웹 개발</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800/50">
+                                <i data-lucide="pie-chart" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>기여도</strong>: 70%</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/30 shrink-0">
+                                    <i data-lucide="alert-triangle"
+                                        class="w-3.5 h-3.5 text-red-500 dark:text-red-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Problem.</strong>
+                                    집중된 공장 화재에도 산업단지 및 지리적 특성을 반영하지 못한 소방 정책
+                                </p>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/30 shrink-0">
+                                    <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Solution.</strong>
+                                    산업단지 특화 화재 위험도 정의 → 구역별 위험도 산출 → 공백 대피소 위치 재설계
+                                </p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400"><strong>전국 대학생 공모전 대상 수상</strong>,
-                                    T-MAP 기반 실시간 거리 산출 및 대피소 최적 위치 제안</p>
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1 flex items-center gap-1.5">
+                                    <i data-lucide="trophy" class="w-3.5 h-3.5"></i> Key Results
+                                </h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400"><strong>제 2회 화성시 도시데이터분석 공모전
+                                        대상(1위)</strong> · ChatGPT API를 활용한 결과 요약 웹 개발 및 배포</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Python</span>
                             <span
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Jupyter
+                                Notebook</span>
+                            <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">QGIS</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Spatial
-                                Analysis</span>
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Streamlit</span>
                             <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">T-MAP
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">ChatGPT
                                 API</span>
-                            <span
-                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Network
-                                Analysis</span>
                         </div>
                         <a href="project-hwaseong.html"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">
                             상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
-                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4 h-[540px]" style="grid-template-rows: auto 1fr">
                         <div class="col-span-2">
                             <img src="화성시 프로젝트 이미지/fig3.png"
-                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 hover-lift"
                                 alt="Analysis Result">
                         </div>
-                        <div class="col-span-2">
-                            <img src="화성시 프로젝트 이미지/화성시 시연.gif"
-                                class="w-full h-64 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
-                                alt="Dashboard Demo">
-                        </div>
+                        <img src="화성시 프로젝트 이미지/활동 사진.png"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
+                            alt="Activity">
+                        <img src="화성시 프로젝트 이미지/화성시 시연.gif"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
+                            alt="Dashboard Demo">
                     </div>
                 </div>
 
-                <div class="flex flex-col lg:flex-row-reverse gap-16 items-start">
-                    <div class="lg:w-1/2 space-y-6">
+                <div class="flex flex-col lg:flex-row gap-16 items-stretch reveal">
+                    <div class="lg:w-1/2 space-y-6 min-h-[560px]">
                         <div class="flex items-center gap-4">
                             <span
                                 class="text-6xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">03</span>
@@ -376,22 +507,53 @@
                         <h3 class="text-3xl font-bold text-navy dark:text-white">RetinaFace Architecture Optimization
                         </h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            경량 백본(MobileNet-v1) 기반 RetinaFace에 WFPN·ECA-CBAM·SCM·Deformable Conv을 도입하여 FLOPs 증가
-                            최소화(+0.09G)로 Hard Case 탐지 성능을 끌어올린 캡스톤 프로젝트입니다.
+                            경량화 시 <strong class="text-navy dark:text-blue-400">성능이 급감</strong>하는 RetinaFace의 병목을 분석하고,
+                            <strong class="text-navy dark:text-blue-400">커스텀 모듈을 설계·이식</strong>하여 연산량 증가를 최소화한 채 탐지 성능을
+                            끌어올린 캡스톤 프로젝트입니다.
                         </p>
 
-                        <div class="space-y-4">
-                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Problem</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">ResNet-152 → MobileNet-v1 교체 시 AP
-                                    약
-                                    13 포인트 급감 — 경량화와 고성능의 양립이 불가</p>
+                        <!-- Role & Contribution 뱃지 -->
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-navy/10 dark:bg-blue-950/60 text-navy dark:text-blue-300 text-xs font-semibold rounded-lg border border-navy/20 dark:border-blue-800/50">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>Role</strong>: 방법론 설계 · 논문 구현 및 파이프라인 개발 · 실험 주도</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800/50">
+                                <i data-lucide="pie-chart" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>기여도</strong>: 70%</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/30 shrink-0">
+                                    <i data-lucide="alert-triangle"
+                                        class="w-3.5 h-3.5 text-red-500 dark:text-red-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Problem.</strong>
+                                    경량화 백본 적용 시 AP 약 13점 급감 → 경량화와 고성능 양립 불가
+                                </p>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/30 shrink-0">
+                                    <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Solution.</strong>
+                                    정보량을 최소화하며, 탐지 성능을 극대화할 수 있는 4개 모듈 직접 설계 및 이식
+                                </p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border-l-4 border-navy">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Impact</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Hard mAP <strong>+2.7 AP</strong>
-                                    향상,
-                                    4개 Custom Module 설계·이식, 학과 캡스톤 1등
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1 flex items-center gap-1.5">
+                                    <i data-lucide="trophy" class="w-3.5 h-3.5"></i> Key Results
+                                </h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">WIDER FACE Hard Case 기준
+                                    <strong>+2.7 AP 향상</strong> (Easy +1.0, Medium +1.7) · <strong>학과 캡스톤 1등</strong>
                                 </p>
                             </div>
                         </div>
@@ -405,6 +567,8 @@
                             <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">WFPN</span>
                             <span
+                                class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">SCM</span>
+                            <span
                                 class="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">Deformable
                                 Conv</span>
                         </div>
@@ -413,17 +577,17 @@
                             상세 내용 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
-                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4 h-[530px]" style="grid-template-rows: auto 1fr">
                         <div class="col-span-2">
-                            <img src="RetinaFace 프로젝트 이미지/fig4.png"
-                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                            <img src="RetinaFace 프로젝트 이미지/head3.png"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 hover-lift"
                                 alt="Architecture">
                         </div>
                         <img src="RetinaFace 프로젝트 이미지/head.png"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Detection Result">
                         <img src="RetinaFace 프로젝트 이미지/head2.png"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Metrics">
                     </div>
                 </div>
@@ -434,35 +598,69 @@
     <!-- Academic Growth & Leadership Section -->
     <section id="activities" class="py-20 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center">Academic Growth & Leadership
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-4 text-center reveal">Academic Growth &
+                Leadership
             </h2>
             <p class="text-slate-500 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">연구 성과 외에도 학술 공동체와 함께 성장하며
                 리더십을 발휘한 경험들을 소개합니다.</p>
 
             <div class="space-y-32">
                 <!-- Activity 1: Leadership -->
-                <div class="flex flex-col lg:flex-row-reverse gap-16 items-start text-left">
-                    <div class="lg:w-1/2 space-y-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-16 items-stretch text-left reveal">
+                    <div class="lg:w-1/2 space-y-6 min-h-[560px]">
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold uppercase tracking-wider">
-                            Leadership & Activities
+                            Leadership / Activities
                         </div>
                         <h3 class="text-3xl font-bold text-navy dark:text-white">Activities & Experiences</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-lg">
-                            KT 디지털 인재 장학금 수여, 학생회장 리더십 활동, 그리고 <strong>17편 이상의 VLM 논문 스터디</strong>를 통해 기술적 성장과 리더십을 동시에
-                            증명해왔습니다.
+                            <strong class="text-navy dark:text-blue-400">KT 디지털 인재 장학생</strong> 선발·활동, <strong
+                                class="text-navy dark:text-blue-400">취업동아리 17인 총괄 리더십</strong>, VLM 논문 스터디까지 — 연구 역량과 협업
+                            능력을 함께 키워온 활동들을 소개합니다.
                         </p>
 
-                        <div class="space-y-4">
-                            <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Highlights</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">KT 현직자 협업 · 17인 동아리 리더십 · 45만건
-                                    Tabular 분석 · VLM 논문 17편 스터디</p>
+                        <!-- Role & Contribution 뱃지 -->
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-navy/10 dark:bg-blue-950/60 text-navy dark:text-blue-300 text-xs font-semibold rounded-lg border border-navy/20 dark:border-blue-800/50">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>Role</strong>: KT 장학생 · 동아리 대표 · 스터디 발표자</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800/50">
+                                <i data-lucide="users" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span><strong>규모</strong>: 취업동아리 17인 총괄 · VLM 논문 17편</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-amber-50 dark:bg-amber-900/30 shrink-0">
+                                    <i data-lucide="target" class="w-3.5 h-3.5 text-amber-500 dark:text-amber-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Challenge.</strong>
+                                    연구 중심 역량에서 벗어나 <strong>실무 협업·리더십·도메인 확장</strong>을 동시에 증명해야 하는 과제
+                                </p>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span
+                                    class="mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/30 shrink-0">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+                                </span>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <strong class="text-slate-800 dark:text-slate-200">Action.</strong>
+                                    KT 현직자 협업 프로젝트 참여 · 취업동아리 <strong>5개월 운영(월간 정기회의)</strong> · 45만 건 Tabular 부식 예측 연구
+                                    · 지도 교수 주관 <strong>VLM 논문 스터디 27편</strong> 발표
+                                </p>
                             </div>
                             <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-navy shadow-sm">
-                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1">Achievement</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">교내 취업동아리 최우수상 · 교외 공모전 최우수상 ·
-                                    취업동아리 17명 전원 수료</p>
+                                <h4 class="font-bold text-navy dark:text-blue-400 mb-1 flex items-center gap-1.5">
+                                    <i data-lucide="medal" class="w-3.5 h-3.5"></i> Achievement
+                                </h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">교내 취업동아리 <strong>최우수상</strong> ·
+                                    현직자를 포함한 다양한 사람들과의 <strong>커뮤니케이션 경험</strong></p>
                             </div>
                         </div>
                         <a href="project-leadership.html"
@@ -470,16 +668,16 @@
                             활동 상세 보기 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
-                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
-                        <img src="Leadership 프로젝트 이미지/VLM 스터디 활동 이미지 - ppt 이미지 2.png"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4 h-[400px]" style="grid-template-rows: auto 1fr">
+                        <img src="Leadership 프로젝트 이미지/fig2.png"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Study">
-                        <img src="Leadership 프로젝트 이미지/취업동아리 활동 이미지 - 정기 회의 이미지.png"
-                            class="w-full h-48 object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800"
+                        <img src="Leadership 프로젝트 이미지/fig4.png"
+                            class="w-full h-full min-h-[140px] object-cover rounded-2xl shadow-md border border-slate-100 dark:border-slate-800 hover-lift"
                             alt="Meeting">
                         <div class="col-span-2">
-                            <img src="Leadership 프로젝트 이미지/소자부식 예측 연구 이미지 - 결과 분석 이미지.png"
-                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800"
+                            <img src="Leadership 프로젝트 이미지/fig7.png"
+                                class="w-full rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 hover-lift"
                                 alt="Analysis Result">
                         </div>
                     </div>
@@ -491,11 +689,11 @@
     <!-- Awards & Honors -->
     <section id="awards" class="py-20 bg-slate-50 dark:bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12">Awards & Honors</h2>
+            <h2 class="text-3xl font-bold text-navy dark:text-blue-400 mb-12 reveal">Awards & Honors</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Award Card -->
                 <div
-                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-delay-1 hover-lift">
                     <img src="상장/제 2회 화성시 도시데이터 연구공모전.png"
                         class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                         onclick="viewImage(this.src)">
@@ -503,7 +701,7 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400">2025 제 2회 화성시 도시데이터 연구공모전</p>
                 </div>
                 <div
-                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-delay-2 hover-lift">
                     <img src="상장/제 2회 AI빅데이터분석경진대회 장려상.jpg"
                         class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                         onclick="viewImage(this.src)">
@@ -511,7 +709,7 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400">2025 제 2회 AI 빅데이터분석 경진대회</p>
                 </div>
                 <div
-                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-delay-3 hover-lift">
                     <img src="상장/2024 AI 빅데이터분석 경진대회 우수상.jpg"
                         class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                         onclick="viewImage(this.src)">
@@ -519,7 +717,7 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400">2024 제 1회 AI 빅데이터분석 경진대회</p>
                 </div>
                 <div
-                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-delay-4 hover-lift">
                     <img src="상장/2024 취업동아리 최우수상.jpg"
                         class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                         onclick="viewImage(this.src)">
@@ -611,7 +809,8 @@
                 </div>
             </div>
             <div class="pt-8 border-t border-white/10 text-center text-slate-500 text-xs">
-                &copy; 2025 KyeongHa Hwang. All Rights Reserved. Built with ❤️ and Research Passion.
+                &copy; 2026 KyeongHa Hwang. All Rights Reserved. Built with ❤️, Research Passion, and powered by Claude
+                & Antigravity (MCP).
             </div>
         </div>
     </footer>
@@ -642,6 +841,32 @@
 
     <script>
         lucide.createIcons();
+
+        // ===== 스크롤 프로그레스 바 =====
+        (function () {
+            const bar = document.getElementById('scroll-progress');
+            window.addEventListener('scroll', function () {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                bar.style.width = pct + '%';
+            }, { passive: true });
+        })();
+
+        // ===== Reveal 스크롤 애니메이션 (IntersectionObserver) =====
+        (function () {
+            const revealEls = document.querySelectorAll('.reveal');
+            if (!revealEls.length) return;
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealEls.forEach(function (el) { observer.observe(el); });
+        })();
 
         // Dark Mode Logic
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

@@ -86,10 +86,33 @@
         .dark .step-card {
             border-left-color: #60a5fa;
         }
+
+        /* 100% 줄엔 기준 글자 크기 */
+        html {
+            font-size: 15px;
+        }
+
+
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-navy);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        .dark #progress-bar {
+            background: #60a5fa;
+        }
     </style>
 </head>
 
 <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <div id="progress-bar"></div>
 
     <!-- Nav -->
     <nav
@@ -116,28 +139,37 @@
             </div>
             <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">화성시 산업단지 맞춤형 화재 대응 전략</h1>
             <p class="text-xl text-blue-100 font-light mb-3">공간 데이터 기반 화재 위험도 모델링 및 Urban AI 정책 제안</p>
-            <p class="text-sm text-blue-200 mb-8 max-w-2xl">전국 최다 화재 발생 도시인 화성시의 산업단지 화재 문제를 GIS와 데이터 분석으로 해결하고, Urban
+            <p class="text-sm text-blue-200 mb-8 max-w-2xl">화성시의 산업단지 화재 문제를 GIS와 데이터 분석으로 해결하고, Urban
                 AI로의 도약을 위한 정책을 제안합니다.</p>
 
             <!-- Quick Impact Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl">
-                <div class="bg-white/5 p-4 text-center">
-                    <div class="text-blue-300 text-xs font-bold uppercase mb-1">Evacuation Gap</div>
-                    <div class="text-2xl font-bold">780m → 200m</div>
-                </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl mb-8">
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">8,009건</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">전국 최다 화재</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide"> 전국 최다 화재</div>
                 </div>
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">12곳</div>
                     <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">산업단지 분석</div>
                 </div>
                 <div class="bg-white/5 p-4 text-center">
-                    <div class="text-2xl font-bold text-white">T-MAP</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">실시간 거리 산출</div>
+                    <div class="text-2xl font-bold text-white">웹 배포</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">Streamlit 활용</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">ChatGPT</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">LLM API 활용</div>
                 </div>
             </div>
+
+            <!-- GitHub 링크 버튼 -->
+            <a href="https://github.com/kyeongha-git/Fire-Risk-Qgis-Hwaseong2025" target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/25 text-white text-sm font-semibold rounded-xl transition-all backdrop-blur-sm">
+                <i data-lucide="github" class="w-4 h-4"></i>
+                GitHub에서 코드 보기
+                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-70"></i>
+            </a>
         </div>
     </header>
 
@@ -149,12 +181,12 @@
                 <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">01</span>
                 <div>
                     <div class="section-label">Problem Definition</div>
-                    <h2 class="text-2xl font-bold text-navy dark:text-white">전국 1위 화재 도시, 화성시의 산업단지 문제</h2>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white">전국 1위 화재 도시, 화성시의 화재 정책 문제</h2>
                 </div>
             </div>
 
             <p class="text-slate-600 dark:text-slate-300 mb-6">화성시의 <strong class="text-navy dark:text-blue-400">Urban
-                    AI로의 도약</strong>이라는 정책 과제에서 출발하여, 화성시만의 고유한 문제를 데이터로 파악했습니다.</p>
+                    AI로의 도약</strong>이라는 정책 과제에서 출발하여, 화성시만의 고유한 문제를 데이터로 규명했습니다.</p>
 
             <div class="grid md:grid-cols-3 gap-4 mb-8">
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
@@ -164,12 +196,14 @@
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="text-2xl font-bold text-navy dark:text-blue-400 mb-1">1,799건</div>
-                    <div class="text-sm text-slate-600 dark:text-slate-300">8,009건 중 <strong>공장 시설</strong>에서 발생한 화재 건수
+                    <div class="text-sm text-slate-600 dark:text-slate-300">8,009건 중 <strong>공장 시설</strong>에서
+                        발생한 화재 건수
                     </div>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="text-2xl font-bold text-navy dark:text-blue-400 mb-1">12개소</div>
-                    <div class="text-sm text-slate-600 dark:text-slate-300">화성시 내 분석 대상 <strong>산업단지</strong> 수</div>
+                    <div class="text-sm text-slate-600 dark:text-slate-300">화성시 내 분석 대상 <strong>산업단지</strong> 수
+                    </div>
                 </div>
             </div>
 
@@ -187,8 +221,9 @@
             </div>
 
             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                <p class="text-sm text-slate-600 dark:text-slate-300">데이터 분석 결과, 화성시 화재의 가장 큰 문제가 <strong
-                        class="text-navy dark:text-blue-400">산업단지에 집중된 공장 화재</strong>임을 확인하고, 산업단지 맞춤형 화재 대응 전략과 Urban
+                <p class="text-sm text-slate-600 dark:text-slate-300">분석 결과, 화성시 화재의 가장 큰 문제가 <strong
+                        class="text-navy dark:text-blue-400">산업단지에 집중된 공장 화재</strong>임을 확인하고, 산업단지 맞춤형 화재 대응 전략과
+                    Urban
                     AI 정책을 제안하는 방향을 설정했습니다.</p>
             </div>
         </section>
@@ -206,7 +241,8 @@
             </div>
 
             <p class="text-slate-600 dark:text-slate-300 mb-8">선행 연구를 바탕으로 화재 위험 요인을 도출하고, 화성시 내 <strong
-                    class="text-navy dark:text-blue-400">12개 전체 산업단지에 대한 1차 위험도 스크리닝</strong>을 실시하여 가장 위험한 3곳을 선별했습니다.
+                    class="text-navy dark:text-blue-400">12개 전체 산업단지에 대한 1차 위험도 스크리닝</strong>을 실시하여 가장 위험한 3곳을
+                선별했습니다.
             </p>
 
             <div class="grid md:grid-cols-2 gap-8 mb-8">
@@ -216,35 +252,35 @@
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">①</span>
                             <div>
-                                <span class="text-sm font-medium">혼합 밀집도</span>
+                                <span class="text-sm font-medium"><strong>혼합 밀집도</strong></span>
                                 <span class="text-xs text-slate-400 ml-2">0.7×기업밀집도 + 0.3×인구밀집도</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">②</span>
                             <div>
-                                <span class="text-sm font-medium">소방서와 거리 (Manhattan)</span>
+                                <span class="text-sm font-medium"><strong>소방서와 거리</strong> (Manhattan)</span>
                                 <span class="text-xs text-slate-400 ml-2">T-Map API 활용</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">③</span>
                             <div>
-                                <span class="text-sm font-medium">소방차 출동 소요 시간</span>
+                                <span class="text-sm font-medium"><strong>소방차 출동 소요 시간</strong></span>
                                 <span class="text-xs text-slate-400 ml-2">T-Map API 활용</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">④</span>
-                            <span class="text-sm">고속도로 접근 거리</span>
+                            <span class="text-sm"><strong>고속도로 접근 거리</strong></span>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">⑤</span>
-                            <span class="text-sm">인프라 수준</span>
+                            <span class="text-sm"><strong>인프라 수준</strong></span>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <span class="text-xs font-bold text-navy dark:text-blue-400 w-6 text-center">⑥</span>
-                            <span class="text-sm">위험 업종 포함 비율</span>
+                            <span class="text-sm"><strong>위험 업종 포함 비율</strong></span>
                         </div>
                     </div>
                 </div>
@@ -272,20 +308,26 @@
             </div>
 
             <p class="text-slate-600 dark:text-slate-300 mb-8">스크리닝으로 선정된 3개 산업단지에 대해 <strong
-                    class="text-navy dark:text-blue-400">QGIS + Python을 결합하여 구역(Grid)별 정밀 위험도 지수</strong>를 산출했습니다.</p>
+                    class="text-navy dark:text-blue-400">QGIS + Python을 결합하여 구역(Grid)별 정밀 화재 위험도 지수</strong>를
+                산출했습니다.</p>
 
             <!-- 분석 방법론 -->
             <div class="space-y-6 mb-8">
                 <div class="step-card">
-                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">Step 1
+                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
+                        Step 1
                         — 공간 매핑</div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">산업단지 전체 좌표를 <strong>QGIS</strong>에 매핑하고, 단지 내
+                    <p class="text-sm text-slate-600 dark:text-slate-300">산업단지 전체 좌표를 <strong
+                            class="text-navy dark:text-blue-400">QGIS</strong>에
+                        매핑하고, 단지 내
                         각 구역을 레이어로 분리합니다.</p>
                 </div>
                 <div class="step-card">
-                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">Step 2
+                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
+                        Step 2
                         — 화재 위험 지수 산출 (FRI)</div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">선행 연구 기반의 3개 지표군으로 구성된 가중 합산 모델을 적용합니다.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">선행 연구 기반의 3개 지표군으로 구성된 가중 합산 모델을
+                        적용합니다.
                     </p>
                     <div class="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm">
                         <span class="text-navy dark:text-blue-400 font-bold">FRI</span> = <span
@@ -296,28 +338,34 @@
                     <div class="mt-3 grid md:grid-cols-3 gap-3 text-xs text-slate-600 dark:text-slate-300">
                         <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <div class="font-bold text-navy dark:text-blue-400 mb-1">위해지표 (0.5)</div>
-                            위험 업종 포함 비율
+                            <strong>위험 업종 포함 비율</strong>
                         </div>
                         <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <div class="font-bold text-navy dark:text-blue-400 mb-1">취약지표 (0.2)</div>
-                            건물 밀도 · 노후건물 비율 · 소방차 접근성
+                            <strong>건물 밀도 · 노후건물 비율 · 소방차 접근성</strong>
                         </div>
                         <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
                             <div class="font-bold text-navy dark:text-blue-400 mb-1">경감지표 (-0.3)</div>
-                            소방용수시설 · 소방서와의 거리
+                            <strong>소방용수시설 · 소방서와의 거리</strong>
                         </div>
                     </div>
                 </div>
                 <div class="step-card">
-                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">Step 3
+                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
+                        Step 3
                         — T-MAP API 소방서 거리 산출</div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">단순 직선거리가 아닌, <strong>T-MAP API</strong>를
-                        Python으로 호출하여 <strong>실제 도로망 기반 출동 거리</strong>를 각 구역 중심부에서 가장 가까운 소방서까지 계산합니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">단순 직선거리가 아닌, <strong
+                            class="text-navy dark:text-blue-400">T-MAP
+                            API</strong>를
+                        Python으로 호출하여 <strong class="text-navy dark:text-blue-400">실제 도로망 기반 출동 거리</strong>를 각 구역 중심부에서
+                        가장 가까운 소방서까지 계산합니다.</p>
                 </div>
                 <div class="step-card">
-                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">Step 4
+                    <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
+                        Step 4
                         — 5단계 위험도 시각화</div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">최종 FRI 점수를 5개 클래스로 분류하여 QGIS 지도 위에 색상으로
+                    <p class="text-sm text-slate-600 dark:text-slate-300">최종 FRI 점수를 5개 클래스로 분류하여 QGIS 지도 위에
+                        색상으로
                         시각화합니다.</p>
                 </div>
             </div>
@@ -327,7 +375,8 @@
                 <img src="화성시 프로젝트 이미지/fig5.png"
                     class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg"
                     alt="Variable Visualization">
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">변수별 위험도 레이어 시각화 (GIS
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">변수별 위험도 레이어
+                    시각화 (QGIS
                     분석 결과)</p>
             </div>
         </section>
@@ -345,7 +394,8 @@
             </div>
 
             <p class="text-slate-600 dark:text-slate-300 mb-6"><strong
-                    class="text-navy dark:text-blue-400">향남제약산업단지</strong>를 기준으로 결과를 설명합니다. 고위험 구역을 중심으로 도보 대피 가능
+                    class="text-navy dark:text-blue-400">향남제약산업단지</strong>를 기준으로 결과를 설명합니다. 고위험 구역을 중심으로 도보 대피
+                가능
                 거리(600m) 버퍼를 QGIS로 시각화하여 기존 대피소의 문제점을 발견했습니다.</p>
 
             <div class="grid md:grid-cols-2 gap-8 mb-6">
@@ -355,10 +405,12 @@
                             class="p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-xl">
                             <div class="flex items-center gap-2 mb-2">
                                 <i data-lucide="x-circle" class="w-4 h-4 text-red-500"></i>
-                                <span class="font-bold text-red-700 dark:text-red-400 text-sm">기존 대피소의 문제점</span>
+                                <span class="font-bold text-red-700 dark:text-red-400 text-sm">기존 대피소의
+                                    문제점</span>
                             </div>
                             <p class="text-sm text-slate-600 dark:text-slate-300">고위험 지역 기준 600m 이내에 대피소가 존재하나,
-                                <strong>하단이 산으로 막혀</strong> 실제 접근이 불가능합니다. 지리적 특성과 화재 위험 요인을 반영하지 못한 배치입니다.
+                                <strong>하단이 산으로 막혀</strong> 실제 접근이 불가능합니다. <strong>지리적 특성</strong>과 <strong>화재 위험
+                                    요인</strong>을 반영하지 못한 배치입니다.
                             </p>
                         </div>
                         <div
@@ -368,7 +420,7 @@
                                 <span class="font-bold text-green-700 dark:text-green-400 text-sm">제안: 신규 대피소 최적
                                     위치</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-300">GIS 분석을 통해 접근성과 안전성을 모두 만족하는
+                            <p class="text-sm text-slate-600 dark:text-slate-300">QGIS 분석을 통해 접근성과 안전성을 모두 만족하는
                                 <strong>신규 대피소 위치</strong>를 데이터 기반으로 도출하여 정책 반영을 제안했습니다.
                             </p>
                         </div>
@@ -377,7 +429,8 @@
                 <div>
                     <img src="화성시 프로젝트 이미지/fig6.png"
                         class="w-full rounded-xl border border-slate-200 dark:border-slate-700" alt="Final Result">
-                    <p class="text-xs text-slate-400 mt-2 text-center">고위험 지역 600m 버퍼 및 신규 대피소 위치 제안. (Green): 기존 대피소,
+                    <p class="text-xs text-slate-400 mt-2 text-center">고위험 지역 600m 버퍼 및 신규 대피소 위치 제안. (Green):
+                        기존 대피소,
                         (Red): 신규 대피소</p>
                 </div>
             </div>
@@ -395,7 +448,9 @@
                 </div>
             </div>
 
-            <p class="text-slate-600 dark:text-slate-300 mb-6">실제 정책 도입 가능성을 높이기 위해 예산 규모별로 단계적 Urban AI 정책을 제안했습니다.</p>
+            <p class="text-slate-600 dark:text-slate-300 mb-6">실제 정책 도입 가능성을 높이기 위해 예산 규모별로 단계적 <strong
+                    class="text-navy dark:text-blue-400">Urban AI 정책</strong>을
+                제안했습니다.</p>
 
             <div class="overflow-x-auto mb-6 shadow-sm rounded-lg border border-slate-200 dark:border-slate-700">
                 <table class="w-full text-sm border-collapse text-center whitespace-nowrap md:whitespace-normal">
@@ -410,7 +465,8 @@
                             <th
                                 class="py-3 px-4 font-semibold border-b border-r border-[#003774] dark:border-slate-600 w-1/3">
                                 AI 기반 방안</th>
-                            <th class="py-3 px-4 font-semibold border-b border-[#003774] dark:border-slate-600 w-1/6">적용
+                            <th class="py-3 px-4 font-semibold border-b border-[#003774] dark:border-slate-600 w-1/6">
+                                적용
                                 대상</th>
                         </tr>
                     </thead>
@@ -419,34 +475,46 @@
                             class="bg-slate-50 dark:bg-slate-800/30 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/60">
                             <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700 font-medium">
                                 저예산</td>
-                            <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700">기본교육, 소방시설
+                            <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700">기본교육,
+                                소방시설
                                 점검,<br>현장 컨설팅</td>
                             <td
                                 class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700 font-medium text-navy dark:text-blue-300">
-                                AI CCTV 설치(최우선 지역),<br>화재 알림 경보 시스템</td>
-                            <td class="py-4 px-4 border-b border-slate-200 dark:border-slate-700">소규모 공장,<br>취약사업장 중심
+                                <strong class="text-navy dark:text-blue-400">AI CCTV</strong> 설치(최우선 지역),<br><strong
+                                    class="text-navy dark:text-blue-400">화재 알림 경보 시스템</strong>
+                            </td>
+                            <td class="py-4 px-4 border-b border-slate-200 dark:border-slate-700">소규모
+                                공장,<br>취약사업장 중심
                             </td>
                         </tr>
                         <tr class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60">
                             <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700 font-medium">
                                 중간 예산</td>
-                            <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700">위험요인 선별,
+                            <td class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700">위험요인
+                                선별,
                                 소방훈련,<br>용수시설 확충, 예방강화지구 지정</td>
                             <td
                                 class="py-4 px-4 border-b border-r border-slate-200 dark:border-slate-700 font-medium text-navy dark:text-blue-300">
-                                화재 예측 모델 도입,<br>AI 기반 실시간 화재 감지</td>
-                            <td class="py-4 px-4 border-b border-slate-200 dark:border-slate-700">표준 산업단지,<br>업종별 맞춤 관리
+                                <strong class="text-navy dark:text-blue-400">화재 예측 모델</strong> 도입,<br><strong
+                                    class="text-navy dark:text-blue-400">AI 기반 실시간 화재 감지</strong>
+                            </td>
+                            <td class="py-4 px-4 border-b border-slate-200 dark:border-slate-700">표준
+                                산업단지,<br>업종별 맞춤 관리
                             </td>
                         </tr>
                         <tr
                             class="bg-slate-50 dark:bg-slate-800/30 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/60">
-                            <td class="py-4 px-4 border-r border-slate-200 dark:border-slate-700 font-medium">고예산</td>
+                            <td class="py-4 px-4 border-r border-slate-200 dark:border-slate-700 font-medium">
+                                고예산</td>
                             <td class="py-4 px-4 border-r border-slate-200 dark:border-slate-700">첨단 예측·대응, 대규모
                                 인프라,<br>통합관제, 특수시설 구축</td>
                             <td
                                 class="py-4 px-4 border-r border-slate-200 dark:border-slate-700 font-bold text-navy dark:text-blue-400">
-                                AI 통합 화재 모니터링 센터 구축,<br>스마트 화재대응 플랫폼</td>
-                            <td class="py-4 px-4 border-slate-200 dark:border-slate-700">국가산단, 대형화재 및<br>복합재난 대응</td>
+                                <strong class="text-navy dark:text-blue-400">AI 통합 화재 모니터링 센터</strong> 구축,<br><strong
+                                    class="text-navy dark:text-blue-400">스마트 화재대응 플랫폼</strong>
+                            </td>
+                            <td class="py-4 px-4 border-slate-200 dark:border-slate-700">국가산단, 대형화재 및<br>복합재난 대응
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -481,7 +549,9 @@
                     class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
                     <div class="font-bold text-lg text-navy dark:text-blue-400 mb-2">Streamlit 대시보드</div>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        실제 데이터 기반으로 각 산업단지·구역별 화재 위험도 분석 결과를 인터랙티브하게 확인할 수 있도록 하여, 비전문가도 쉽게 이해할 수 있는 플랫폼을 구축했습니다.
+                        실제 데이터 기반으로 각 산업단지·구역별 화재 위험도 분석 결과를 인터랙티브하게 확인할 수 있도록 하여, <strong>비전문가도 쉽게 이해할 수 있는
+                            플랫폼</strong>을
+                        구축했습니다.
                     </p>
                 </div>
 
@@ -489,7 +559,9 @@
                     class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
                     <div class="font-bold text-lg text-navy dark:text-blue-400 mb-2">Chat GPT API 연동</div>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        분석 결과는 Chat GPT API를 활용하여 생성되지만, Hallucination을 최소화하기 위하여 실제 수집/분석된 데이터를 로드하여 사용하도록 설정하였습니다.
+                        분석 결과는 Chat GPT API를 활용하여 생성되지만, <strong>Hallucination을 최소화</strong>하기 위하여 실제 수집/분석된 데이터를 로드하여
+                        사용하도록
+                        설정하였습니다.
                     </p>
                 </div>
 
@@ -497,7 +569,9 @@
                     class="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
                     <div class="font-bold text-lg text-navy dark:text-blue-400 mb-2">의사 결정 지원</div>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        화재 위험도 및 위험도 분석 결과 뿐만 아니라, 위험도 수치에 따른 예산 배분 우선순위 및 맞춤형 대응 시나리오를 제시하여 사용자의 의사 결정을 지원할 수 있도록
+                        분석 결과 뿐만 아니라, 위험도에 따른 예산 배분 우선순위 및 <strong>맞춤형 대응 시나리오</strong>를 제시하여 <strong>사용자의 의사 결정을
+                            지원</strong>할 수
+                        있도록
                         설계하였습니다.
                     </p>
                 </div>
@@ -509,7 +583,8 @@
                     <source src="화성시 프로젝트 이미지/웹 사이트 시연.mp4" type="video/mp4">
                     브라우저가 동영상을 지원하지 않습니다.
                 </video>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">Streamlit 대시보드 시연 —
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">Streamlit
+                    대시보드 시연 —
                     구역별 위험도 + AI 대응 방안 생성</p>
             </div>
         </section>
@@ -521,23 +596,23 @@
             <div class="section-label mb-4">Tech Stack Used</div>
             <div class="flex flex-wrap gap-2">
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Python</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Python</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">QGIS</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">QGIS</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Pandas
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Pandas
                     / GeoPandas</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Chat-GPT
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Chat-GPT
                     API</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">T-MAP
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">T-MAP
                     API</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Spatial
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Spatial
                     Analysis</span>
                 <span
-                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">Streamlit</span>
+                    class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg lg:hover:scale-105 transition-transform cursor-default">Streamlit</span>
             </div>
         </section>
     </main>
@@ -570,21 +645,29 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+
+
+        // Progress Bar
+        window.onscroll = function () {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            const pb = document.getElementById("progress-bar");
+            if (pb) pb.style.width = scrolled + "%";
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-        }
+
+        lucide.createIcons();
     </script>
 </body>
 

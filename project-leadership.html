@@ -145,10 +145,32 @@
             border-color: #1d4ed8;
             color: #ffffff;
         }
+
+        html {
+            font-size: 15px;
+        }
+
+
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-navy);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        .dark #progress-bar {
+            background: #60a5fa;
+        }
     </style>
 </head>
 
 <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <div id="progress-bar"></div>
 
     <!-- Nav -->
     <nav
@@ -179,22 +201,22 @@
                 과정에서 쌓은 다양한 경험들을 담았습니다.</p>
 
             <!-- Quick Impact Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl">
-                <div class="bg-white/5 p-4 text-center">
-                    <div class="text-2xl font-bold text-white">KT 선발</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">디지털 장학생</div>
-                </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl mb-8">
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">17명</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">동아리 리더십</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">스터디 리더십</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">KT 수혜</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">디지털 인재 장학생</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">27편+</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">VLM 논문 스터디</div>
                 </div>
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">45만건</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">데이터 분석</div>
-                </div>
-                <div class="bg-white/5 p-4 text-center">
-                    <div class="text-2xl font-bold text-white">27편</div>
-                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">논문 스터디</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">Tabular 데이터 분석</div>
                 </div>
             </div>
         </div>
@@ -236,12 +258,12 @@
                             <li class="flex items-start gap-2">
                                 <i data-lucide="check"
                                     class="w-3.5 h-3.5 text-navy dark:text-blue-400 mt-0.5 flex-shrink-0"></i>
-                                선행 연구 조사 및 향기 마케팅 필요성 근거 자료 수집
+                                <strong>선행 연구 조사</strong> 및 향기 마케팅 <strong>필요성 근거 자료 수집</strong>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="check"
                                     class="w-3.5 h-3.5 text-navy dark:text-blue-400 mt-0.5 flex-shrink-0"></i>
-                                현직자와 지속적인 커뮤니케이션을 통한 방향 조율
+                                현직자와 <strong>지속적인 커뮤니케이션</strong>을 통한 <strong>방향 조율</strong>
                             </li>
                         </ul>
                     </div>
@@ -260,15 +282,25 @@
                         <span class="text-sm font-bold text-navy dark:text-blue-400">AI 세미나 및 기업 탐방</span>
                     </div>
                     <div class="p-5">
-                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">접한 AI 기술 영역</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">AI 세미나 기술 영역</div>
                         <div class="flex flex-wrap gap-1.5 mb-4">
                             <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">인터넷 클라우드</span>
                             <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">자율주행 AI</span>
                             <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">AI 기반 서비스</span>
                         </div>
                         <div class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">기업 탐방</div>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">실제 기업의 서버 인프라·운영 환경을 직접 체험하고, 현직
-                            엔지니어의 실무 경험을 청취했습니다.</p>
+                        <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check"
+                                    class="w-3.5 h-3.5 text-navy dark:text-blue-400 mt-0.5 flex-shrink-0"></i>
+                                실제 기업의 <strong>운영 환경</strong> 직접 체험
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check"
+                                    class="w-3.5 h-3.5 text-navy dark:text-blue-400 mt-0.5 flex-shrink-0"></i>
+                                현직 엔지니어의 <strong>실무 경험</strong> 청취
+                            </li>
+                        </ul>
                     </div>
                     <!-- 이미지 -->
                     <div class="px-5 pb-5">
@@ -280,7 +312,8 @@
 
             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                 <p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-navy dark:text-blue-400">배운
-                        점</strong>: 연구실 밖에서 실제 기업이 AI를 어떻게 서비스화하고, 어떤 문제를 해결하려 하는지를 직접 접하면서, 학술 연구와 실무 적용 사이의 간극을 이해하는
+                        점</strong>: 실제 기업이 AI를 어떻게 서비스화하고, 어떤 문제를 해결하려 하는지를 직접 접하면서, <strong
+                        class="text-navy dark:text-blue-400">학술 연구와 실무 적용 사이의 간극을 이해</strong>하는
                     계기가 되었습니다.</p>
             </div>
         </section>
@@ -313,8 +346,9 @@
                         </div>
                         <span class="font-bold text-sm text-navy dark:text-white">정기 회의 (월 1회)</span>
                     </div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">각 소그룹별 인사이트 공유 및 활동 계획 수립. 직무 간 정보 교류를 통해
-                        데이터과학 전반의 직무 이해도를 높였습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">각 소그룹별 <strong>인사이트 공유</strong> 및 <strong>활동
+                            계획 수립</strong>. <strong>직무 간 정보 교류</strong>를 통해
+                        데이터과학 전반의 <strong>직무 이해도</strong>를 높였습니다.</p>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="flex items-center gap-2 mb-3">
@@ -324,8 +358,10 @@
                         </div>
                         <span class="font-bold text-sm text-navy dark:text-white">팀장 회의 (격주)</span>
                     </div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">소그룹 팀장들과 2주 간격으로 회의를 주최하여 활동 일정을 조율하고, 부원 의견을
-                        수렴해 운영 방향에 반영했습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">소그룹 팀장들과 <strong>2주 간격</strong>으로 회의를 주최하여
+                        <strong>활동 일정을 조율</strong>하고, 부원 <strong>의견을
+                            수렴</strong>해 운영 방향에 반영했습니다.
+                    </p>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="flex items-center gap-2 mb-3">
@@ -335,9 +371,11 @@
                         </div>
                         <span class="font-bold text-sm text-navy dark:text-white">관심 직무별 소그룹</span>
                     </div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">17명을 관심 직무(데이터 분석가, AI 개발자, 취업 집중 트랙)별 소그룹으로
-                        나누어,
-                        직무 특화 스터디를 병행 운영했습니다.</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">17명을 <strong>관심 직무</strong>(데이터 분석가, AI 개발자,
+                        취업 집중 트랙)별 <strong>소그룹으로
+                            나누어</strong>,
+                        <strong>직무 특화 스터디</strong>를 병행 운영했습니다.
+                    </p>
                 </div>
             </div>
 
@@ -370,7 +408,8 @@
             <div
                 class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
                 <p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-navy dark:text-blue-400">배운
-                        점</strong>: 기술적 성과만큼이나 사람을 이끄는 구조 설계가 중요하다는 것을 배웠습니다. 회의 주기·소그룹 구성·목표 공유 방식을 체계화했을 때 이탈률이 낮아지고
+                        점</strong>: 기술적 성과만큼이나 <strong class="text-navy dark:text-blue-400">사람을 이끄는 구조 설계</strong>가
+                    중요하다는 것을 배웠습니다. 회의 주기·소그룹 구성·목표 공유 방식을 체계화했을 때 이탈률이 낮아지고
                     성과가 높아졌습니다.</p>
             </div>
 
@@ -420,8 +459,9 @@
                 </div>
             </div>
 
-            <p class="text-slate-600 dark:text-slate-300 mb-6">Computer Vision 연구에 집중하던 저에게 <strong
-                    class="text-navy dark:text-blue-400">Tabular 데이터 분석 역량</strong>을 증명하는 개인 연구입니다. 약 45만 건의 센서 데이터를
+            <p class="text-slate-600 dark:text-slate-300 mb-6"><strong class="text-navy dark:text-blue-400">Tabular 데이터
+                    분석 및 ML 모델 활용 역량</strong>을 키운 연구입니다. <strong class="text-navy dark:text-blue-400">약 45만 건의 센서
+                    데이터</strong>를
                 전처리하고, ML 모델 비교 실험을 직접 설계·수행했습니다.</p>
 
             <div class="grid md:grid-cols-3 gap-4 mb-8">
@@ -429,19 +469,22 @@
                     <div class="section-label mb-2">Step 01</div>
                     <h4 class="font-bold text-navy dark:text-white mb-2">데이터 전처리 및 EDA</h4>
                     <p class="text-sm text-slate-600 dark:text-slate-300">약 <strong>45만 건</strong>의 Tabular 데이터를 정제하고,
-                        분포 분석·이상값 처리 등 탐색적 데이터 분석을 수행했습니다.</p>
+                        <strong>분포 분석·이상값 처리</strong> 등 탐색적 데이터 분석을 수행했습니다.
+                    </p>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="section-label mb-2">Step 02</div>
                     <h4 class="font-bold text-navy dark:text-white mb-2">SHAP 기반 변수 선택</h4>
                     <p class="text-sm text-slate-600 dark:text-slate-300"><strong>SHAP(SHapley Additive
-                            exPlanations)</strong>을 활용하여 부식 예측에 영향을 미치는 핵심 변수를 도출하고 설명 가능성을 확보했습니다.</p>
+                            exPlanations)</strong>을 활용하여 부식 예측에 영향을 미치는 <strong>핵심 변수를 도출</strong>하고 <strong>설명
+                            가능성</strong>을 확보했습니다.</p>
                 </div>
                 <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                     <div class="section-label mb-2">Step 03</div>
                     <h4 class="font-bold text-navy dark:text-white mb-2">8개 모델 비교 실험</h4>
                     <p class="text-sm text-slate-600 dark:text-slate-300">Logistic Regression, Random Forest, XGBoost,
-                        LightGBM 등 <strong>8개 ML 모델</strong>을 구현하고 성능을 체계적으로 비교했습니다.</p>
+                        LightGBM 등 <strong>8개 ML 모델</strong>을 구현하고 <strong>성능을
+                            체계적으로 비교</strong>했습니다.</p>
                 </div>
             </div>
 
@@ -463,8 +506,8 @@
             <div
                 class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
                 <p class="text-sm text-slate-600 dark:text-slate-300"><strong
-                        class="text-navy dark:text-blue-400">의미</strong>: 이 연구를 통해 이미지 데이터 중심의 CV 역량 외에, 정형
-                    데이터(Tabular)를 처리하고 해석 가능한 ML 모델을 구축하는 역량도 갖추고 있음을 체계적으로 정리할 수 있었습니다.</p>
+                        class="text-navy dark:text-blue-400">배우점</strong>: 이 연구를 통해 이미지 데이터 중심의 CV 역량 외에, 정형
+                    데이터를 처리하고 해석 가능한 ML 모델을 구축하는 역량도 갖출 수 있었습니다.</p>
             </div>
 
             <!-- 연구 결과 이미지 2칸 -->
@@ -511,8 +554,11 @@
                 </div>
             </div>
 
-            <p class="text-slate-600 dark:text-slate-300 mb-6">최신 딥러닝 트렌드를 체계적으로 습득하기 위해 지도 교수님과 함께 진행한 논문 스터디입니다.
-                <strong class="text-navy dark:text-blue-400">총 27편의 논문</strong>을 커리큘럼 순으로 학습하며 이론과 구현을 병행했습니다.
+            <p class="text-slate-600 dark:text-slate-300 mb-6"><strong class="text-navy dark:text-blue-400">최신 딥러닝
+                    트렌드</strong>를 체계적으로 습득하기 위해 지도 교수님과 함께 진행한
+                논문 스터디입니다.
+                <strong class="text-navy dark:text-blue-400">총 27편의 논문</strong>을 커리큘럼 순으로 학습하며
+                <strong class="text-navy dark:text-blue-400">이론과 구현을 병행</strong>했습니다.
             </p>
 
             <!-- 인터랙티브 커리큘럼 -->
@@ -624,8 +670,9 @@
             <div
                 class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
                 <p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-navy dark:text-blue-400">배운
-                        점</strong>: 최신 연구 트렌드를 학습할 수 있었으며, 이를 이해하기 위해 CNN과 LLM 기초 지식들을 쌓을 수 있었습니다. 또한, 논문을 코드로 구현하는 과정에서
-                    딥러닝 모델의 동작 원리를 깊이 있게 이해할 수 있었습니다.</p>
+                        점</strong>: 최신 연구 트렌드를 학습할 수 있었으며, 이를 이해하기 위해 CNN과 LLM 지식들을 쌓을 수 있었습니다. 또한, 논문을 코드로 구현하는 과정에서
+                    <strong class="text-navy dark:text-blue-400">딥러닝 모델의 동작 원리</strong>를 깊이 있게 이해할 수 있었습니다.
+                </p>
             </div>
 
             <!-- 활동 사진 2칸 -->
@@ -678,21 +725,29 @@
                             45만 건 데이터 처리 및 8개 모델 비교</li>
                         <li class="flex items-start gap-2"><i data-lucide="check-circle"
                                 class="w-3.5 h-3.5 text-navy dark:text-blue-400 mt-0.5 flex-shrink-0"></i>최신 트렌드 — VLM
-                            논문 17편 체계적 학습 및 구현</li>
+                            논문 27편 체계적 학습</li>
                     </ul>
                 </div>
                 <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <h3 class="font-bold text-slate-800 dark:text-white mb-3">사용 기술 스택</h3>
                     <div class="flex flex-wrap gap-1.5">
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">Python</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">PyTorch</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">scikit-learn</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">XGBoost /
-                            LightGBM</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">SHAP</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">Pandas / NumPy</span>
-                        <span class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md">CNN / Transformer /
-                            VLM</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">Python</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">PyTorch</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">scikit-learn</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">XGBoost
+                            / LightGBM</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">SHAP</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">Pandas
+                            / NumPy</span>
+                        <span
+                            class="px-2 py-1 text-xs bg-slate-100 dark:bg-slate-800 rounded-md lg:hover:scale-105 transition-transform cursor-default">CNN
+                            / Transformer / VLM</span>
                     </div>
                 </div>
             </div>
@@ -736,26 +791,31 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+
+
+        // Progress Bar
+        window.onscroll = function () {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            const pb = document.getElementById("progress-bar");
+            if (pb) pb.style.width = scrolled + "%";
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-        }
 
         // VLM 커리큘럼 탭 전환
         const phases = ['cnn', 'transformer', 'unsupervised', 'llm', 'vlm'];
         function showPhase(phase) {
-            // 모든 패널 숨기기
             phases.forEach(p => {
                 const panel = document.getElementById('phase-' + p);
                 const tab = document.getElementById('tab-' + p);
@@ -765,7 +825,6 @@
                     tab.classList.add('inactive-tab');
                 }
             });
-            // 선택 패널 보이기
             const active = document.getElementById('phase-' + phase);
             const activeTab = document.getElementById('tab-' + phase);
             if (active) active.classList.remove('hidden');
@@ -774,6 +833,8 @@
                 activeTab.classList.add('active-tab');
             }
         }
+
+        lucide.createIcons();
     </script>
 </body>
 
