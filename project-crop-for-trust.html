@@ -93,8 +93,7 @@
             font-size: 15px;
         }
 
-
-
+        /* ===== Progress Bar ===== */
         #progress-bar {
             position: fixed;
             top: 0;
@@ -109,13 +108,78 @@
         .dark #progress-bar {
             background: #60a5fa;
         }
+
+        /* ===== Image Zoom & Lightbox (Premium) ===== */
+        .zoom-trigger {
+            cursor: zoom-in;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .zoom-trigger:hover {
+            transform: scale(1.02);
+        }
+
+        #image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            user-select: none;
+        }
+
+        #image-modal.active #modal-img {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 
 <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
     <div id="progress-bar"></div>
 
-    <!-- Nav -->
     <nav
         class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
         <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
@@ -133,7 +197,6 @@
         </div>
     </nav>
 
-    <!-- Hero -->
     <header class="bg-navy dark:bg-slate-900 text-white py-16 border-b border-navy/20">
         <div class="max-w-5xl mx-auto px-6">
             <div class="mb-5">
@@ -146,7 +209,6 @@
             <p class="text-sm text-blue-200 mb-8 max-w-2xl">차량 유리 손상 이미지의 이진 분류 자동화 과정에서 발생하는 신뢰성 문제를 Data-Centric 접근으로
                 해결한 연구입니다.</p>
 
-            <!-- Quick Impact Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl mb-8">
                 <div class="bg-white/5 p-4 text-center">
                     <div class="text-2xl font-bold text-white">+4.69%</div>
@@ -166,7 +228,6 @@
                 </div>
             </div>
 
-            <!-- GitHub 링크 버튼 -->
             <a href="https://github.com/kyeongha-git/Crop-for-Trust" target="_blank" rel="noopener noreferrer"
                 class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/25 text-white text-sm font-semibold rounded-xl transition-all backdrop-blur-sm">
                 <i data-lucide="github" class="w-4 h-4"></i>
@@ -178,7 +239,6 @@
 
     <main class="max-w-5xl mx-auto px-6 py-16 space-y-20">
 
-        <!-- 01. Problem -->
         <section>
             <div class="flex items-center gap-4 mb-8">
                 <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">01</span>
@@ -227,16 +287,17 @@
                 </div>
             </div>
 
-            <!-- 이미지 영역 -->
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
                     <img src="assets/Crop_for_Trust/fig1.png"
-                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700" alt="Marking Example">
+                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                        alt="Marking Example" onclick="viewImage(this.src)">
                     <p class="text-xs text-slate-400 mt-2 text-center">데이터 예시. (Top) Repair, (Bottom) Replace</p>
                 </div>
                 <div>
                     <img src="assets/Crop_for_Trust/fig2.png"
-                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700" alt="Dataset Example">
+                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                        alt="Dataset Example" onclick="viewImage(this.src)">
                     <p class="text-xs text-slate-400 mt-2 text-center">Attention 결과. (Left) Input, (Right) Grad-CAM</p>
                 </div>
             </div>
@@ -252,7 +313,6 @@
 
         <hr class="border-slate-100 dark:border-slate-800">
 
-        <!-- 02. Method -->
         <section>
             <div class="flex items-center gap-4 mb-8">
                 <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">02</span>
@@ -305,41 +365,39 @@
                 </div>
             </div>
 
-            <!-- 전체 파이프라인 이미지 -->
             <div>
                 <img src="assets/Crop_for_Trust/fig3.png"
-                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"
-                    alt="Full Pipeline">
+                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm zoom-trigger"
+                    alt="Full Pipeline" onclick="viewImage(this.src)">
                 <p class="text-xs text-slate-400 mt-2 text-center">전체 파이프라인: Input → GAC (Marking 제거) → YOLO-Crop (ROI
                     추출) → CNN Classifier</p>
             </div>
 
-            <!-- Data Flow 이미지 -->
             <div class="mt-6">
                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-3 font-medium">파이프라인 단계별 데이터 변환 예시</p>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
                         <img src="assets/Crop_for_Trust/fig4.jpg"
-                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover"
-                            alt="Input">
+                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover zoom-trigger"
+                            alt="Input" onclick="viewImage(this.src)">
                         <p class="text-xs text-slate-400 mt-1 text-center">① Original Input</p>
                     </div>
                     <div>
                         <img src="assets/Crop_for_Trust/fig5.jpg"
-                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover"
-                            alt="GAC">
+                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover zoom-trigger"
+                            alt="GAC" onclick="viewImage(this.src)">
                         <p class="text-xs text-slate-400 mt-1 text-center">② GAC 적용 후</p>
                     </div>
                     <div>
                         <img src="assets/Crop_for_Trust/fig6.png"
-                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover"
-                            alt="Crop">
+                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover zoom-trigger"
+                            alt="Crop" onclick="viewImage(this.src)">
                         <p class="text-xs text-slate-400 mt-1 text-center">③ YOLO-Crop 적용 후</p>
                     </div>
                     <div>
                         <img src="assets/Crop_for_Trust/fig7.png"
-                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover"
-                            alt="Hybrid">
+                            class="w-full rounded-lg border border-slate-200 dark:border-slate-700 aspect-square object-cover zoom-trigger"
+                            alt="Hybrid" onclick="viewImage(this.src)">
                         <p class="text-xs text-slate-400 mt-1 text-center">④ Hybrid (GAC + Crop)</p>
                     </div>
                 </div>
@@ -348,7 +406,6 @@
 
         <hr class="border-slate-100 dark:border-slate-800">
 
-        <!-- 03. Experiments -->
         <section>
             <div class="flex items-center gap-4 mb-8">
                 <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">03</span>
@@ -359,7 +416,6 @@
             </div>
 
             <div class="space-y-8">
-                <!-- Exp 1 -->
                 <div class="experiment-card">
                     <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
                         Experiment 1</div>
@@ -377,17 +433,16 @@
                         <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded">SSIM</span>
                         <span class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded">PSNR</span>
                     </div>
-                    <!-- GAC 검증 이미지 -->
                     <div class="mt-6">
                         <img src="assets/Crop_for_Trust/fig8.png"
-                            class="w-full max-w-[500px] mx-auto block rounded-xl border border-slate-200 dark:border-slate-700"
-                            alt="GAC Validation">
+                            class="w-full max-w-[500px] mx-auto block rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                            alt="GAC Validation" onclick="viewImage(this.src)">
 
                         <p class="text-xs text-slate-400 mt-2 text-center">GAC 성능 검증: Scatter Plot (Edge L1 vs. Feature
                             Map Distance)</p>
                     </div>
                     <div
-                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
+                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4 mt-6">
                         <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
                         <p class="text-sm text-slate-600 dark:text-slate-300"><strong
                                 class="text-navy dark:text-blue-400">GAC</strong>는 원본과 거의 차이가 없는 약한
@@ -397,7 +452,6 @@
                     </div>
                 </div>
 
-                <!-- Exp 2 -->
                 <div class="experiment-card">
                     <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
                         Experiment 2</div>
@@ -446,7 +500,7 @@
                         </table>
                     </div>
                     <div
-                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
+                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4 mt-6">
                         <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
                         <p class="text-sm text-slate-600 dark:text-slate-300"><strong>GAC / Blur / Black-out</strong>
                             기법은 정확도 <strong>90% 미만</strong>에
@@ -455,7 +509,6 @@
                     </div>
                 </div>
 
-                <!-- Exp 3 -->
                 <div class="experiment-card">
                     <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-2">
                         Experiment 3</div>
@@ -464,23 +517,22 @@
                     <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Original과 YOLO-Crop 데이터셋으로 동일한 분류 모델을
                         학습시키고, 동일한 이미지에 대하여 <strong class="text-navy dark:text-blue-400">Grad-CAM 시각화</strong>를 통해
                         Attention Alignment를 비교합니다.</p>
-                    <!-- Grad-CAM 이미지 -->
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
                             <img src="assets/Crop_for_Trust/fig9.png"
-                                class="w-full rounded-xl border border-slate-200 dark:border-slate-700"
-                                alt="Grad-CAM Before">
+                                class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                                alt="Grad-CAM Before" onclick="viewImage(this.src)">
                             <p class="text-xs text-slate-400 mt-2 text-center">Original 데이터에 대한 Attention Alignment</p>
                         </div>
                         <div>
                             <img src="assets/Crop_for_Trust/fig10.png"
-                                class="w-full rounded-xl border border-slate-200 dark:border-slate-700"
-                                alt="Grad-CAM After">
+                                class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                                alt="Grad-CAM After" onclick="viewImage(this.src)">
                             <p class="text-xs text-slate-400 mt-2 text-center">GAC 데이터에 대한 Attention Alignment</p>
                         </div>
                     </div>
                     <div
-                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4">
+                        class="bg-navy/5 dark:bg-blue-900/20 border border-navy/20 dark:border-blue-700/30 rounded-xl p-4 mt-6">
                         <p class="text-sm font-bold text-navy dark:text-blue-300 mb-2">핵심 결과</p>
                         <p class="text-sm text-slate-600 dark:text-slate-300">주위 배경으로 분산되지 않고, <strong>손상</strong>으로
                             <strong class="text-navy dark:text-blue-400">Attention이
@@ -497,7 +549,6 @@
 
         <hr class="border-slate-100 dark:border-slate-800">
 
-        <!-- 04. Results -->
         <section>
             <div class="flex items-center gap-4 mb-8">
                 <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">04</span>
@@ -525,13 +576,12 @@
 
             <div class="mb-6">
                 <img src="assets/Crop_for_Trust/fig11.png"
-                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"
-                    alt="Accuracy Comparison">
+                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm zoom-trigger"
+                    alt="Accuracy Comparison" onclick="viewImage(this.src)">
                 <p class="text-xs text-slate-400 mt-2 text-center"> 방법론 적용 후 분류 정확도 비교 결과 (Baseline: 88.71%)
                 </p>
             </div>
 
-            <!-- MLOps 및 배포 -->
             <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
                 <h3 class="font-bold text-navy dark:text-white mb-4">MLOps 구현 및 배포</h3>
                 <div class="grid md:grid-cols-3 gap-4 text-sm text-slate-600 dark:text-slate-300">
@@ -559,17 +609,16 @@
                 </div>
             </div>
 
-            <!-- 데모 GIF -->
             <div class="mt-6">
                 <img src="assets/Crop_for_Trust/demo.gif"
-                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700" alt="Demo">
+                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger" alt="Demo"
+                    onclick="viewImage(this.src)">
                 <p class="text-xs text-slate-400 mt-2 text-center">Streamlit 웹 데모 시연 (Hugging Face Spaces 배포)</p>
             </div>
         </section>
 
         <hr class="border-slate-100 dark:border-slate-800">
 
-        <!-- Tech Stack -->
         <section>
             <div class="section-label mb-4">Tech Stack Used</div>
             <div class="flex flex-wrap gap-2">
@@ -606,7 +655,6 @@
         </section>
     </main>
 
-    <!-- Footer Navigation -->
     <footer class="border-t border-slate-200 dark:border-slate-800 py-12">
         <div class="max-w-5xl mx-auto px-6">
             <p class="text-xs text-slate-400 uppercase tracking-wide mb-6">다른 프로젝트</p>
@@ -642,9 +690,14 @@
         </div>
     </footer>
 
+    <div id="image-modal" onclick="closeImage()">
+        <div class="modal-close">
+            <i data-lucide="x" class="w-6 h-6 text-white"></i>
+        </div>
+        <img id="modal-img" src="" alt="Zoomed image">
+    </div>
+
     <script>
-
-
         // Progress Bar
         window.onscroll = function () {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -666,6 +719,115 @@
         }
 
         lucide.createIcons();
+
+        // ===== Image View Logic (Premium Lightbox) & Scroll Zoom & Drag(Pan) =====
+        let currentZoom = 1;
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let translateX = 0, translateY = 0;
+
+        function viewImage(src) {
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-img');
+
+            img.src = src;
+            img.style.transform = `translate(0px, 0px) scale(1)`; // 줌/이동 초기화
+            img.style.cursor = 'grab'; // 확대 시 잡을 수 있음을 표시
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+        }
+
+        function closeImage() {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-img');
+
+            modal.classList.remove('active');
+            img.style.transform = '';
+
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
+        document.getElementById('image-modal').onclick = function (e) {
+            // 이미지 밖의 배경을 클릭하거나, 닫기(X) 버튼을 클릭했을 때 모달 닫기
+            if (e.target.id === 'image-modal' || e.target.closest('.modal-close')) {
+                closeImage();
+            }
+        };
+
+        const modalImg = document.getElementById('modal-img');
+
+        // 휠 스크롤 줌 이벤트
+        document.getElementById('image-modal').addEventListener('wheel', (e) => {
+            const modal = document.getElementById('image-modal');
+            if (!modal.classList.contains('active')) return;
+
+            e.preventDefault(); // 스크롤 시 화면 흔들림 방지
+
+            if (e.deltaY < 0) {
+                currentZoom += 0.15; // 위로 휠: 확대
+            } else {
+                currentZoom -= 0.15; // 아래로 휠: 축소
+            }
+
+            // 줌 범위 제한 (1배 ~ 4배)
+            currentZoom = Math.min(Math.max(1, currentZoom), 4);
+
+            // 완전히 축소했을 때는 위치도 정중앙으로 초기화
+            if (currentZoom === 1) {
+                translateX = 0;
+                translateY = 0;
+            }
+
+            modalImg.style.transition = 'transform 0.2s ease-out'; // 부드러운 줌
+            modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+        });
+
+        // ===== 드래그 (이동) 이벤트 =====
+        modalImg.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // 기본 브라우저 이미지 드래그 방지
+            if (currentZoom > 1) {
+                isDragging = true;
+                // 현재 마우스 위치와 기존 이동 거리의 차이를 계산
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                modalImg.style.cursor = 'grabbing'; // 꽉 쥔 커서로 변경
+                modalImg.style.transition = 'none'; // 마우스를 즉각적으로 따라오도록 애니메이션 끄기
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            // 이동 거리 계산
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+
+            // 실시간 이미지 이동
+            modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            modalImg.style.cursor = 'grab'; // 원래 커서로 복구
+        });
+
+        // ESC Key로 모달 닫기
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('image-modal') !== null && document.getElementById('image-modal').classList.contains('active')) {
+                closeImage();
+            }
+        });
     </script>
 </body>
 

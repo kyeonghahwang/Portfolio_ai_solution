@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lounge: Intelligent News Curation | 황경하 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { navy: '#003774' },
+                    fontFamily: {
+                        sans: ['Pretendard', 'Inter', 'Noto Sans KR', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-navy: #003774;
+            --font-main: 'Pretendard', 'Inter', 'Noto Sans KR', sans-serif;
+            --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-display {
+            font-family: var(--font-display);
+            letter-spacing: -0.02em;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            font-family: var(--font-display);
+        }
+
+        .img-placeholder {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        .dark .img-placeholder {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .module-card {
+            border-left: 3px solid var(--primary-navy);
+            padding-left: 1.25rem;
+        }
+
+        .dark .module-card {
+            border-left-color: #60a5fa;
+        }
+
+        html {
+            font-size: 15px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-navy);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        .dark #progress-bar {
+            background: #60a5fa;
+        }
+
+        .step-node {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .dark .step-node {
+            background: #0f172a;
+            border-color: #1e293b;
+        }
+
+        /* ===== Image Zoom & Lightbox (Premium) ===== */
+        .zoom-trigger {
+            cursor: zoom-in;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .zoom-trigger:hover {
+            transform: scale(1.02);
+        }
+
+        #image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            user-select: none;
+        }
+
+        #image-modal.active #modal-img {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 leading-relaxed transition-colors">
+    <div id="progress-bar"></div>
+
+    <nav
+        class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-navy dark:text-blue-400 font-semibold text-sm hover:opacity-70 transition-opacity">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> 포트폴리오로 돌아가기
+            </a>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleDarkMode()"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-navy dark:bg-slate-900 text-white py-16 border-b border-navy/20">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-5">
+                <span class="text-blue-300 text-xs font-bold uppercase tracking-widest">Automation · LLM Pipeline · MVP
+                    Development </span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">AI Lounge</h1>
+            <p class="text-xl text-blue-100 font-light mb-3">Intelligent News Curation Platform</p>
+            <p class="text-sm text-blue-200 mb-8 max-w-2xl"> 과도히 낭비되는 뉴스 필터링 시간을 웹 크롤링과 LLM API의 연결로 해결하고, 노코드 툴로
+                자동화한 프로젝트입니다.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden max-w-2xl mb-8">
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">&lt; 1분</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">뉴스 검색 시간 단축</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">25명</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">초기 사용자 수요 조사</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">MVP 개발</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">수업 내 배포</div>
+                </div>
+                <div class="bg-white/5 p-4 text-center">
+                    <div class="text-2xl font-bold text-white">Automation</div>
+                    <div class="text-xs text-blue-300 mt-1 uppercase tracking-wide">업무 자동화 설계</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16 space-y-20">
+
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">01</span>
+                <div>
+                    <div class="section-label">Problem Definition</div>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white">정보 과부하 시대, 뉴스 큐레이션의 비효율</h2>
+                </div>
+            </div>
+
+            <p class="text-slate-600 dark:text-slate-300 mb-6 font-medium">매일 쏟아지는 기사 속에서 필요한 정보를 골라내기 위해 매일 아침 수십 분을
+                허비하는 현대인의 페인 포인트를 포착했습니다.</p>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="clock" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                        <h3 class="font-bold text-navy dark:text-white">문제 1: 시간 소모</h3>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">해외 연구에서, <strong>뉴스 환경은 사용자에게 다양한 소스와 대량의
+                            정보를 동시에
+                            제공하여 혼란을 주고 선택 과정의 비용을 증가</strong>시킨다고 보고합니다. 우리는 관심사 맞춤형 정보 큐레이션을 제공해, 이 <strong>선택 과정 비용의
+                            절감</strong>을 목표로 합니다.
+                    </p>
+                </div>
+                <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="filter" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                        <h3 class="font-bold text-navy dark:text-white">문제 2: 노이즈 필터링</h3>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">여러 연구에서, <strong>과잉 뉴스와 자극적인 헤드라인은 ‘정보 과부하 →
+                            뉴스 피로 →
+                            분석 마비와 회피’</strong>로 이어진다고 보고합니다. 우리는 중복과 자극을 걷어내고 <strong>‘인사이트만 남긴 요약’</strong>을 제공해, 이
+                        인지적 피로를 줄이는 것을 목표로</strong> 합니다.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-col items-center">
+                <img src="assets/AI_Lounge/fig1.png"
+                    class="w-full max-h-[500px] object-contain rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg zoom-trigger"
+                    alt="AI Lounge Comparison Infographic" onclick="viewImage(this.src)">
+
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">
+                    기존 뉴스 소비 행태 vs AI Lounge 도입 후의 효율성 비교
+                </p>
+            </div>
+
+            <br>
+
+            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                <p class="text-sm text-slate-600 dark:text-slate-300"> 문제를 해결하기 위한 아이디어를 설계 후, 교내 커뮤니티를 통해 <strong
+                        class="text-navy dark:text-blue-400">수요 조사</strong>를 진행했습니다.
+                    이후, 리스크 요인(AI 환각 등)을 분석하여 <strong class="text-navy dark:text-blue-400">PoC 개발</strong>에 착수했습니다.</p>
+            </div>
+        </section>
+
+        <hr class="border-slate-100 dark:border-slate-800">
+
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">02</span>
+                <div>
+                    <div class="section-label">Automated Pipeline</div>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white">No-code와 Python의 하이브리드 자동화</h2>
+                </div>
+            </div>
+
+            <p class="text-slate-600 dark:text-slate-300 mb-8">단순한 정보 수집을 넘어, <strong
+                    class="text-navy dark:text-blue-400">자산화-정제-요약-배포</strong>로 이어지는 견고한 파이프라인을 구축했습니다.</p>
+
+            <div class="flex flex-col md:flex-row gap-4 items-center mb-12">
+                <div class="step-node border-navy text-navy">Python Crawling</div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300 hidden md:block"></i>
+                <div class="step-node">Notion API (Storage)</div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300 hidden md:block"></i>
+                <div class="step-node">ChatGPT API (Insights)</div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300 hidden md:block"></i>
+                <div class="step-node border-blue-600 text-blue-600">Discord Distribution</div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="module-card">
+                    <h4 class="font-bold text-lg text-navy dark:text-white mb-2">Step 1: Python 기반 타겟팅 크롤링</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">GoogleSearch API를 활용해 전문 테크 플랫폼에서 특정 키워드를
+                        필터링하여 자동으로 데이터를 수집합니다.
+                        LLM API를 활용하여 최적화된 키워드를 추출합니다.
+                    </p>
+                </div>
+
+                <div class="module-card">
+                    <h4 class="font-bold text-lg text-navy dark:text-white mb-2">Step 2: Notion 데이터 자산화 및 추적</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">수집된 데이터는 Notion API를 통해 데이터베이스에 저장됩니다. 휘발성
+                        공유가 아닌, 추후 검색 및 추적이 가능하도록 하는 관리자 감독을 위해 설계된
+                        디자인입니다.
+                        <br>
+                        (위 과정은 추후 진행되는 모든 과정에서 기록됩니다.)
+                    </p>
+                </div>
+
+                <div class="module-card">
+                    <h4 class="font-bold text-lg text-navy dark:text-white mb-2">Step 3: ChatGPT 활용 지능형 요약 및 인사이트 추출
+                    </h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">프롬프트 엔지니어링을 통해 단순 요약을 넘어, "왜 이 뉴스가 중요한가?",
+                        "어떤 산업에 영향을 주는가?" 등의 인사이트를 자동으로 추출합니다.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4 class="font-bold text-lg text-navy dark:text-white mb-2">Step 4: Risk Control
+                        (Human-in-the-loop)</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">LLM의 환각 현상 및 가짜 뉴스 배포를 방지하기 위해
+                        배포 직전 관리자가 최종 확인 버튼을 누르는 HITL 구조를 적용하여 신뢰성을 확보했습니다.</p>
+                </div>
+            </div>
+            <br>
+
+            <div class="w-full">
+                <img src="assets/AI_Lounge/fig2.png"
+                    class="w-full rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg zoom-trigger"
+                    alt="Variable Visualization" onclick="viewImage(this.src)">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center font-medium">노코드 툴(Make)을 활용한 자동화
+                    파이프라인</p>
+            </div>
+        </section>
+
+        <hr class="border-slate-100 dark:border-slate-800">
+
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-4xl font-bold text-slate-100 dark:text-slate-800 select-none leading-none">03</span>
+                <div>
+                    <div class="section-label">Impact & Results</div>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white">MVP 배포 및 실사용자 피드백으로 검증된 가치</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div
+                    class="p-6 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <h4 class="font-bold text-navy dark:text-blue-400 mb-4 flex items-center gap-2">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i> 정량적 성과
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 dark:text-slate-400">뉴스 검색 및 필터링 시간</span>
+                            <span class="font-bold text-navy dark:text-white">기존 60분 → 1분 이내</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 dark:text-slate-400">전공 수업 평가 순위</span>
+                            <span class="font-bold text-navy dark:text-white">1위, A+ 이수</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 dark:text-slate-400">MVP 체험 신청 유저</span>
+                            <span class="font-bold text-navy dark:text-white">25명 (목표치 조기 달성)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    class="p-6 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <h4 class="font-bold text-navy dark:text-blue-400 mb-4 flex items-center gap-2">
+                        <i data-lucide="smile" class="w-5 h-5"></i> 정성적 피드백
+                    </h4>
+                    <div class="space-y-3 italic text-sm text-slate-600 dark:text-slate-400">
+                        <p>"AI 분야의 변화 속도가 빨라 정보를 접하기 힘들었는데, AI 라운지를 통해 핵심만 빠르게 파악할 수 있게 되었습니다."</p>
+                        <p>"단순 요약뿐만 아니라 친숙한 말투, 희망적인 메세지, 원문 표시까지 해주어 거부감이 적고 신뢰가 갑니다."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <img src="assets/AI_Lounge/fig3.PNG"
+                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                        alt="Grad-CAM Before" onclick="viewImage(this.src)">
+                    <p class="text-xs text-slate-400 mt-2 text-center">Original 데이터에 대한 Attention Alignment</p>
+                </div>
+                <div>
+                    <img src="assets/AI_Lounge/fig4.PNG"
+                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700 zoom-trigger"
+                        alt="Grad-CAM After" onclick="viewImage(this.src)">
+                    <p class="text-xs text-slate-400 mt-2 text-center">GAC 데이터에 대한 Attention Alignment</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-8 border-t border-slate-100 dark:border-slate-800">
+            <div class="section-label mb-4">Tech Stack Used</div>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 rounded-lg">Python
+                </span>
+                <span class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 rounded-lg">Make</span>
+                <span class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 rounded-lg">OpenAI API
+                    (GPT-4o mini)</span>
+                <span class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 rounded-lg">Notion
+                    API</span>
+                <span class="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-800 rounded-lg">Discord</span>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 dark:border-slate-800 py-12">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="text-xs text-slate-400 uppercase tracking-wide mb-6">다른 프로젝트</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <a href="project-crop-for-trust.html"
+                    class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-navy dark:hover:border-blue-500 transition-colors">
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Research Paper</div>
+                        <div class="font-semibold text-navy dark:text-white">Crop for Trust</div>
+                    </div>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="project-hwaseong.html"
+                    class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-navy dark:hover:border-blue-500 transition-colors">
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Data Analysis</div>
+                        <div class="font-semibold text-navy dark:text-white">화성시 화재 대응 전략</div>
+                    </div>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="project-leadership.html"
+                    class="group flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-navy dark:hover:border-blue-500 transition-colors">
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Leadership & Activities</div>
+                        <div class="font-semibold text-navy dark:text-white">Activities & Experiences</div>
+                    </div>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="image-modal" onclick="closeImage()">
+        <div class="modal-close">
+            <i data-lucide="x" class="w-6 h-6 text-white"></i>
+        </div>
+        <img id="modal-img" src="" alt="Zoomed image">
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        window.onscroll = function () {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // ===== Image View Logic (Premium Lightbox) & Scroll Zoom & Drag(Pan) =====
+        let currentZoom = 1;
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let translateX = 0, translateY = 0;
+
+        function viewImage(src) {
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-img');
+
+            img.src = src;
+            img.style.transform = `translate(0px, 0px) scale(1)`; // 줌/이동 초기화
+            img.style.cursor = 'grab'; // 확대 시 잡을 수 있음을 표시
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+        }
+
+        function closeImage() {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-img');
+
+            modal.classList.remove('active');
+            img.style.transform = '';
+
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
+        document.getElementById('image-modal').onclick = function (e) {
+            // 이미지 밖의 배경을 클릭하거나, 닫기(X) 버튼을 클릭했을 때 모달 닫기
+            if (e.target.id === 'image-modal' || e.target.closest('.modal-close')) {
+                closeImage();
+            }
+        };
+
+        const modalImg = document.getElementById('modal-img');
+
+        // 휠 스크롤 줌 이벤트
+        document.getElementById('image-modal').addEventListener('wheel', (e) => {
+            const modal = document.getElementById('image-modal');
+            if (!modal.classList.contains('active')) return;
+
+            e.preventDefault(); // 스크롤 시 화면 흔들림 방지
+
+            if (e.deltaY < 0) {
+                currentZoom += 0.15; // 위로 휠: 확대
+            } else {
+                currentZoom -= 0.15; // 아래로 휠: 축소
+            }
+
+            // 줌 범위 제한 (1배 ~ 4배)
+            currentZoom = Math.min(Math.max(1, currentZoom), 4);
+
+            // 완전히 축소했을 때는 위치도 정중앙으로 초기화
+            if (currentZoom === 1) {
+                translateX = 0;
+                translateY = 0;
+            }
+
+            modalImg.style.transition = 'transform 0.2s ease-out'; // 부드러운 줌
+            modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+        });
+
+        // ===== 드래그 (이동) 이벤트 =====
+        modalImg.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // 기본 브라우저 이미지 드래그 방지
+            if (currentZoom > 1) {
+                isDragging = true;
+                // 현재 마우스 위치와 기존 이동 거리의 차이를 계산
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                modalImg.style.cursor = 'grabbing'; // 꽉 쥔 커서로 변경
+                modalImg.style.transition = 'none'; // 마우스를 즉각적으로 따라오도록 애니메이션 끄기
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            // 이동 거리 계산
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+
+            // 실시간 이미지 이동
+            modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            modalImg.style.cursor = 'grab'; // 원래 커서로 복구
+        });
+
+        // ESC Key로 모달 닫기
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('image-modal') !== null && document.getElementById('image-modal').classList.contains('active')) {
+                closeImage();
+            }
+        });
+    </script>
+</body>
+
+</html>
